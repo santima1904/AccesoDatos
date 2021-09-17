@@ -5,7 +5,13 @@ import java.util.Scanner;
 public class Validacion {
      public static Scanner teclado = new Scanner(System.in);
 
-    public static String pedirString (){
+    /**
+     * Prototipo: public static String pedirString()
+     * Descripcion: Pide una cadena al usuario
+     *
+     * @return cadena
+     */
+    public static String pedirString(){
          String cadena;
 
          cadena = teclado.nextLine();

@@ -6,18 +6,16 @@ public class FileAccess {
 
     public static File fichero;
 
-    private boolean comprobarFichero (String nombre) {
-        File ficheroAuxiliar = new File(nombre);
-        boolean existe = false;
 
-        if (ficheroAuxiliar.exists()) {
-            existe = true;
-        }
+
+    public static boolean crearFichero(String nombre){
+
+        boolean existe;
+
+        fichero = new File(nombre);
+        existe = fichero.exists();
 
         return existe;
-    }
-
-    public static void crearFichero(String nombre){
 
     }
 
