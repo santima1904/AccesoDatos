@@ -11,7 +11,13 @@ public class FileAccess {
 
 
 
-
+    /**
+     * Prototipo: public static File crearFichero(String nombre)
+     * Precondiciones: nombre diferente de nulo
+     * Entradas: String nombre
+     * Salida: fichero creado con el nombre dado
+     * Postcondiciones: fichero creado
+     */
     public static File crearFichero(String nombre){
         boolean existe;
 
