@@ -19,21 +19,36 @@ public class FileAccess {
 
 
     //Metodo para ver si se puede leer
-    public static boolean puedeLeer(File fich){
+    public static String puedeLeer(File fich){
 
-        return fich.canRead();
+        String puedeLeer = "_";
+
+        if (fich.canRead()){
+            puedeLeer = "R";
+        }
+        return puedeLeer;
     }
 
     //Metodo para ver si se puede escribir
-    public static boolean puedeEscribir(File fich){
+    public static String puedeEscribir(File fich){
 
-        return fich.canWrite();
+        String puedeEscribir= "_";
+
+        if (fich.canWrite()){
+            puedeEscribir= "W";
+        }
+        return puedeEscribir;
     }
 
     //Metodo para ver si se puede ejecutar
-    public static boolean puedeEjecutar(File fich){
+    public static String puedeEjecutar(File fich){
 
-        return fich.canExecute();
+        String puedeEjecutar = "_";
+
+        if (fich.canExecute()){
+            puedeEjecutar = "X";
+        }
+        return puedeEjecutar;
     }
 
 
