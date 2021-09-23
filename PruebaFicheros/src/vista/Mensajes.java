@@ -7,8 +7,8 @@ public class Mensajes {
     //En esta clase va a haber tanto entradas como salidas por teclado
 
     public static final String pedirRuta = "Indique la ruta por favor: ";
-    public static final String esFichero = "es un fichero ";
-    public static final String esDierctorio = "es un directorio ";
+    public static final String esFichero = "-___";
+    public static final String esDierctorio = "+---";
 
     public static Scanner teclado = new Scanner(System.in);
 
@@ -21,15 +21,17 @@ public class Mensajes {
     }
 
     public static void escribirListado(File[] ficheros){
+        String cadenaFichero = esFichero;
 
-        if (ficheros == null) {
-            System.out.println(esFichero);
+        for(File f: ficheros) {
 
-        }else{
-            System.out.println(esDierctorio);
-            for(File f: ficheros) {
-                String textoDescr=f.isDirectory() ? "/":f.isFile() ? "_": "?";
-                System.out.println("("+textoDescr+") "+f.getName());
+            if (f.isFile()) {
+
+            }
+            else{
+            System.out.println(String.format(esDierctorio+f.getName()));
+
+
             }
         }
 

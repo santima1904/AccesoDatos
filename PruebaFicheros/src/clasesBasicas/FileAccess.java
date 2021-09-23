@@ -12,11 +12,31 @@ public class FileAccess {
         boolean fichero = false;
         File [] ficheros = null;
 
-        if (!fich.isFile()) {
-            ficheros = fich.listFiles();
-        }
+        ficheros = fich.listFiles();
+
         return ficheros;
     }
+
+
+    //Metodo para ver si se puede leer
+    public static boolean puedeLeer(File fich){
+
+        return fich.canRead();
+    }
+
+    //Metodo para ver si se puede escribir
+    public static boolean puedeEscribir(File fich){
+
+        return fich.canWrite();
+    }
+
+    //Metodo para ver si se puede ejecutar
+    public static boolean puedeEjecutar(File fich){
+
+        return fich.canExecute();
+    }
+
+
 
 
 }
