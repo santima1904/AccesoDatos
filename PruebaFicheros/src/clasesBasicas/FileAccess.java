@@ -7,6 +7,17 @@ public class FileAccess {
     public static File fich;
 
 
+    /**
+     * Prototipo:  public static File[] listarDirectorio (String ruta)
+     * Descripcion: Metodo para meter en una array el contenido de un directorio
+     * Precondiciones: ruta cadena valida
+     * Postcondiciones: array cargada con contenidos del directorio
+     *
+     * Entradas: String ruta
+     * Salidas: File[] ficheros
+     *
+     * @param ruta
+     */
     public static File[] listarDirectorio (String ruta) {
         fich = new File(ruta);
         boolean fichero = false;
@@ -18,7 +29,17 @@ public class FileAccess {
     }
 
 
-    //Metodo para ver si se puede leer
+    /**
+     * Prototipo:  public static String puedeLeer(File fich)
+     * Descripcion: Metodo para comprobar si se puede leer el fichero
+     * Precondiciones: fich tiene que ser un fichero
+     * Postcondiciones: cadena modificada
+     *
+     * Entradas: File fich
+     * Salidas: String puedeLeer
+     *
+     * @param fich
+     */
     public static String puedeLeer(File fich){
 
         String puedeLeer = "_";
