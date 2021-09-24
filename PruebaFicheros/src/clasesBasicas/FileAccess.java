@@ -50,7 +50,17 @@ public class FileAccess {
         return puedeLeer;
     }
 
-    //Metodo para ver si se puede escribir
+    /**
+     * Prototipo:  public static String puedeEscribir(File fich)
+     * Descripcion: Metodo para comprobar si se puede escribir el fichero
+     * Precondiciones: fich tiene que ser un fichero
+     * Postcondiciones: cadena modificada
+     *
+     * Entradas: File fich
+     * Salidas: String puedeEscribir
+     *
+     * @param fich
+     */
     public static String puedeEscribir(File fich){
 
         String puedeEscribir= "_";
@@ -61,7 +71,17 @@ public class FileAccess {
         return puedeEscribir;
     }
 
-    //Metodo para ver si se puede ejecutar
+    /**
+     * Prototipo:  public static String puedeEjecutar(File fich)
+     * Descripcion: Metodo para comprobar si se puede ejecutar el fichero
+     * Precondiciones: fich tiene que ser un fichero
+     * Postcondiciones: cadena modificada
+     *
+     * Entradas: File fich
+     * Salidas: String puedeEjecutar
+     *
+     * @param fich
+     */
     public static String puedeEjecutar(File fich){
 
         String puedeEjecutar = "_";

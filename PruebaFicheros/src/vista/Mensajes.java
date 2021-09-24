@@ -10,10 +10,11 @@ public class Mensajes {
 
     //Constantes
     public static final String pedirRuta = "Indique la ruta por favor: ";
-    public static final String esDierctorio = "+---";
+    public static final String esDierctorio = "+--- ";
 
     //Atributos staticos
     public static Scanner teclado = new Scanner(System.in);
+    public static int contador = 0;
 
 
     /**
@@ -46,17 +47,28 @@ public class Mensajes {
      */
     public static void escribirListado(File[] ficheros){
 
-        for(File f: ficheros) {
-
+        for(File f: ficheros){
             if (f.isFile()) {
-                System.out.println(String.format("-%1s%2s%3s", FileAccess.puedeLeer(f), FileAccess.puedeEscribir(f), FileAccess.puedeEjecutar(f) ));
-            }
-            else{
-                System.out.println(esDierctorio+f.getName());
+                tabulaciones(contador);
+                System.out.println("-"+FileAccess.puedeLeer(f)+FileAccess.puedeEscribir(f)+FileAccess.puedeEjecutar(f)+" "+f.getName());
+                // System.out.println(String.format("-%1s%2s%3s",FileAccess.puedeLeer(f),FileAccess.puedeEscribir(f),FileAccess.puedeEjecutar(f)));
+            } else {
+                tabulaciones(contador);
+                System.out.println(esDierctorio + f.getName());
+                contador += 1;
                 escribirListado(FileAccess.listarDirectorio(f.getPath()));
             }
         }
 
+    }
 
+
+    public static void tabulaciones(int contador){
+
+        if (contador > 0) {
+            for (int i = 0; i <= contador; i++) {
+                System.out.print(" ");
+            }
+        }
     }
 }
