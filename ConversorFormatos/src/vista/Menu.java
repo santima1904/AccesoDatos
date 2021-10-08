@@ -84,8 +84,15 @@ public class Menu {
      * Descripcion: recoge un int por pantalla
      */
     public static int pedirInt(){
+        int opcion = 7;
 
-        return  teclado.nextInt();
+        while(opcion!=0&&opcion!=1&&opcion!=2&&opcion!=3&&opcion!=4&&opcion!=5&&opcion!=6){
+
+            opcion = teclado.nextInt();
+        }
+
+
+        return opcion;
     }
 
     /**
@@ -93,11 +100,18 @@ public class Menu {
      * Descripcion: recoge un String por pantalla
      */
     public static String pedirFormato(){
+        String formato = null;
 
         System.out.println(TITULO);
         System.out.println(FORMATO);
 
-        return  tecladoString.nextLine();
+        while(formato!="US-ASCII"&&formato!="ISO-8859-1"&&formato!="UTF-8"&&formato!="UTF-16BE"&&formato!="UTF-16LE"&&formato!="UTF-16"){
+
+            formato = tecladoString.nextLine();
+        }
+
+
+        return  formato;
     }
 
     /**
