@@ -20,6 +20,7 @@ public class Menu {
 
     //Teclado
     public static Scanner teclado = new Scanner(System.in);
+    public static Scanner tecladoString = new Scanner(System.in);
 
 
     //Metodos
@@ -86,13 +87,20 @@ public class Menu {
     public static int pedirNumeroTlf(){
         int numeroTlf = 0;
 
-        while (numeroTlf<100000000 || numeroTlf>999999999) {
-            System.out.println(PEDIR_NUMERO);
-
-            numeroTlf = teclado.nextInt();
-        }
+        numeroTlf = validarString(tecladoString.nextLine());
 
         return numeroTlf;
+    }
+
+    private static int validarString(String cadena){
+        int numero = 0;
+
+        try{
+            numero = Integer.parseInt(cadena);
+        }catch (NumberFormatException e){
+            validarString(cadena);
+        }
+        return numero;
     }
 
 

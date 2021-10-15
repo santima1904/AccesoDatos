@@ -57,26 +57,19 @@ public class FileAccess {
      * Postcondiciones: Devuelve una lista con los enteros del fichero
      */
     public static List<Integer> leerNumeros(File fichero){
-
         List<Integer> numeros = new ArrayList<>();
         boolean finFichero = false;
 
         try (DataInputStream ois = new DataInputStream(new FileInputStream(fichero))){
-
             while(!finFichero){
-
                 try{
-
                     numeros.add(ois.readInt());
                 }catch (IOException e){
-
                     finFichero = true;
                 }
-
             }
         }catch (IOException e) {
             e.printStackTrace();
-
         }
 
         return numeros;
