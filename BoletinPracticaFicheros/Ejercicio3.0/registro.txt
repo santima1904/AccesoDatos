@@ -1,0 +1,5 @@
+2021/10/20 09:14:53 Inforamcion: Últimas noticias: Eres guapísimo
+2021/10/20 09:15:10 Error: / by zero
+2021/10/20 09:15:10 Error: Cannot store to object array because "lista" is null
+2021/10/20 09:15:10 Advertencia: Cuidado
+2021/10/20 09:15:10 Inforamcion: Últimas noticias: Eres guapísimo
