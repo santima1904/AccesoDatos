@@ -20,7 +20,6 @@ public class FileAccess {
 
         try {
             fichero.createNewFile();//creo el fichero
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,10 +38,7 @@ public class FileAccess {
     public static void escribirFichero(File fichero, int numeroTlf) {
 
         try (DataOutputStream oos = new DataOutputStream(new FileOutputStream(fichero, true))){
-
             oos.writeInt(numeroTlf);
-
-
         } catch (IOException e) {//si salta la excepcion  IOException
             e.printStackTrace();//muestro la excepcion
         }
@@ -57,6 +53,7 @@ public class FileAccess {
      * Postcondiciones: Devuelve una lista con los enteros del fichero
      */
     public static List<Integer> leerNumeros(File fichero){
+
         List<Integer> numeros = new ArrayList<>();
         boolean finFichero = false;
 

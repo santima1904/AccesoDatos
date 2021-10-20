@@ -14,13 +14,14 @@ public class Main {
         final String NOMBRE = "numerostlf.txt";
 
         int opcion = 0;
-        List <Integer> lista = new ArrayList<>();
+        List <Integer> lista;
         File fichero = FileAccess.crearFichero(NOMBRE);
 
         while(opcion != 3){
 
             lista = FileAccess.leerNumeros(fichero);
             Menu.mostrarMovilesGuardados(lista);
+            Menu.inicializarContador(lista);
 
             Menu.mostrarMenu();
             opcion = Menu.pedirOpcion();

@@ -12,7 +12,7 @@ public class Menu {
             "3. Salir";
 
     public static final String SEPARACION = "-------------------------------";
-    public static final String MOSTRAR_MOVILES = "Los moviles guardados son: ";
+    public static final String MOSTRAR_MOVILES = "El número de teléfonos guardados es: ";
     public static final String PEDIR_INDICE = "Introduzca la posicion del numero a buscar: ";
     public static final String SALIDA = "Hasta pronto ^^";
     public static final String PEDIR_NUMERO = "Introduzca el numero de telefono: ";
@@ -21,6 +21,9 @@ public class Menu {
     //Teclado
     public static Scanner teclado = new Scanner(System.in);
     public static Scanner tecladoString = new Scanner(System.in);
+
+    //Propiedades estaticas
+    private static int contador;
 
 
     //Metodos
@@ -34,7 +37,6 @@ public class Menu {
 
         System.out.println(MENU_PRINCIPAL);
         System.out.println(SEPARACION);
-
     }
 
     /**
@@ -45,14 +47,10 @@ public class Menu {
 
         int contador = 0;
 
-        System.out.println(MOSTRAR_MOVILES);
-
         for (int numero:lista) {
-
-            System.out.println(contador+". "+numero);
             contador++;
         }
-
+        System.out.println(MOSTRAR_MOVILES+contador);
         System.out.println(SEPARACION);
     }
     /**
@@ -65,8 +63,6 @@ public class Menu {
         System.out.println(SEPARACION);
     }
 
-
-
     /**
      * Cabecera: public static int pedirOpcion()
      * Descripcion: Metodo para pedir un int  al usuario por pantalla
@@ -75,7 +71,13 @@ public class Menu {
      */
     public static int pedirOpcion(){
 
-        return teclado.nextInt();
+        int opcion = 0;
+
+        while (opcion!=1&&opcion!=2&&opcion!=3){
+            opcion = teclado.nextInt();
+        }
+
+        return opcion;
     }
 
     /**
@@ -85,18 +87,25 @@ public class Menu {
      * @return
      */
     public static int pedirNumeroTlf(){
+
         int numeroTlf = 0;
 
-        numeroTlf = validarString(tecladoString.nextLine());
+        System.out.println(PEDIR_NUMERO);
+        while (numeroTlf == 0) {
+            numeroTlf = validarString(tecladoString.nextLine());
+        }
 
         return numeroTlf;
     }
 
     private static int validarString(String cadena){
+
         int numero = 0;
 
         try{
-            numero = Integer.parseInt(cadena);
+            if (cadena.length()==9) {
+                numero = Integer.parseInt(cadena);
+            }
         }catch (NumberFormatException e){
             validarString(cadena);
         }
@@ -109,6 +118,7 @@ public class Menu {
      * Descripcion: Metodo para mostrar mensaje de despedida
      */
     public static void salida(){
+
         System.out.println(SALIDA);
     }
 
@@ -121,9 +131,26 @@ public class Menu {
      */
     public static int pedirIndice(){
 
-        System.out.println(PEDIR_INDICE);
+        int indice = contador+1;
 
-        return teclado.nextInt();
+        while(indice > contador) {
+            System.out.println(PEDIR_INDICE);
+            indice  = teclado.nextInt();
+        }
+
+        return indice;
+    }
+
+    /**
+     * Cabecera: public static void inicializarContador(List<Integer> lista)
+     * Descripcion: Metodo para pedir un int al usuario por pantalla
+     *
+     */
+    public static void inicializarContador(List<Integer> lista){
+        contador = 0;
+        for (int numero:lista) {
+            contador++;
+        }
     }
 
 
