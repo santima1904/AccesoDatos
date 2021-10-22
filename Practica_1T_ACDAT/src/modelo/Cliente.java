@@ -32,15 +32,17 @@ public class Cliente {
     private String dni;
     private String numTelefono;
     private String direccion;
+    private int posicion;
 
     //Constructor
     //Constructor con parámetros
-    public Cliente(String nombre, String apellidos, String dni, String numTelefono, String direccion) {
+    public Cliente(String nombre, String apellidos, String dni, String numTelefono, String direccion, int posicion) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
         this.numTelefono = numTelefono;
         this.direccion = direccion;
+        this.posicion = posicion;
     }
 
     //Constructor por defecto
@@ -50,6 +52,7 @@ public class Cliente {
         this.dni = " ";
         this.numTelefono = " ";
         this.direccion = " ";
+        this.posicion = 0;
     }
 
     //Getters and setters
@@ -89,6 +92,14 @@ public class Cliente {
         this.direccion = direccion;
     }
 
+    public int getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
+    }
+
     //Métodos de la clase Object
 
     /**
@@ -100,6 +111,7 @@ public class Cliente {
     @Override
     public String toString() {
         return "Cliente{" +
+                "posicion='" + posicion + '\'' +
                 "nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", dni='" + dni + '\'' +

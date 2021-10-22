@@ -10,10 +10,12 @@ public class FileAccessText{
     public static final String FICHERO_PRINCIPAL = "configuracion.bin";
 
     /**
-     * <h1>Cabecera: </h1>public void inicializarFichero()<br/>
+     * <h1>Cabecera: </h1>public File inicializarFichero()<br/>
      * <h1>Descripción :</h1> Método para crear un fichero
+     *
+     * @return ficheroConfiguracion
      */
-    public static void inicializarFichero() {
+    public static File inicializarFichero() {
         File ficheroconfiguracion = new File(FICHERO_PRINCIPAL, ".");
 
         try {
@@ -22,6 +24,7 @@ public class FileAccessText{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return ficheroconfiguracion;
     }
 
     /**
