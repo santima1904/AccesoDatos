@@ -8,6 +8,13 @@ public class FileAccessText{
 
     //Constantes
     public static final String FICHERO_PRINCIPAL = "configuracion.bin";
+    public static final String FICHERO_INDICE = "indice_clientes.bin";
+    public static final String FICHERO_TEXT = "listado_clientes.bin";
+
+    //Propiedades estáticas
+    private static File ficheroConfiguracion = new File(FICHERO_PRINCIPAL);
+    private static File ficheroText = new File(FICHERO_TEXT);
+    private static File ficheroIndice = new File(FICHERO_INDICE);
 
     /**
      * <h1>Cabecera: </h1>public File inicializarFichero()<br/>
@@ -15,16 +22,14 @@ public class FileAccessText{
      *
      * @return ficheroConfiguracion
      */
-    public static File inicializarFichero() {
-        File ficheroconfiguracion = new File(FICHERO_PRINCIPAL, ".");
+    public static void inicializarFichero() {
 
         try {
-            ficheroconfiguracion.createNewFile();
-            escribirCodificacionFichero("UTF-8", ficheroconfiguracion);
+            ficheroConfiguracion.createNewFile();
+            escribirCodificacionFichero("UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ficheroconfiguracion;
     }
 
     /**
@@ -36,12 +41,11 @@ public class FileAccessText{
      * <h1>Entradas: </h1>String codificacion, File fichero <br/>
      * <h1>Salidas: </h1>Ninguna
      *
-     * @param fichero
      * @param codificacion
      */
-    public static void escribirCodificacionFichero(String codificacion, File fichero) {
+    public static void escribirCodificacionFichero(String codificacion) {
 
-        try(FileWriter fw = new FileWriter(fichero, false)) {
+        try(FileWriter fw = new FileWriter(ficheroConfiguracion, false)) {
             fw.write(codificacion);
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,13 +61,12 @@ public class FileAccessText{
      * <h1>Entradas: </h1>List<Cliente> lista, File fichero, String formato <br/>
      * <h1>Salidas: </h1>Ninguna
      *
-     * @param fichero
      * @param lista
      * @param formato
      */
-    public static void escribirClientesFichero(List<Cliente> lista, File fichero, String formato) {
+    public static void escribirClientesFichero(List<Cliente> lista, String formato) {
 
-        try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(fichero, true)), leerFicheroText(fichero))) {
+        try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(ficheroText, true)), leerFicheroText(ficheroConfiguracion))) {
             for (Cliente cliente:lista){
                 osw.write(cliente.toString());
                 osw.write(System.lineSeparator());
@@ -96,5 +99,30 @@ public class FileAccessText{
             e.printStackTrace();
         }
         return formato;
+    }
+
+    /**
+     * <h1>Cabecera: </h1>private static String leerFicheroText(File fichero)<br/>
+     * <h1>Descripción: </h1> Método para leer el fichero de texto <br/>
+     * <h1>Precondiciones: </h1>Fichero creado<br/>
+     * <h1>Postocondiciones: </h1>Formato leido<br/>
+     * <br/>
+     * <h1>Entradas: </h1>File fichero<br/>
+     * <h1>Salidas: </h1>String formato
+     *
+     * @return formato
+     */
+    private static void escribirFicheroIndice(String dni, int posicion){
+
+        try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(ficheroIndice, false))){
+            if (posicion != -1) {
+                dos.write(posicion);
+                dos.writeBytes("-" + dni);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
