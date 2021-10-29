@@ -32,12 +32,12 @@ public class FileAccessText{
     }
 
     /**
-     * <h1>Cabecera: </h1>public static void escribirCodificacionFichero(String codificacion, File fichero)<br/>
+     * <h1>Cabecera: </h1>public static void escribirCodificacionFichero(String codificacion)<br/>
      * <h1>Descripción: </h1> Método para escribir en el fichero dado la cadena introducida <br/>
      * <h1>Precondiciones: </h1>Fichero creado y cadena diferente de null <br/>
      * <h1>Postocondiciones: </h1>Cadena introducida en el fichero <br/>
      * <br/>
-     * <h1>Entradas: </h1>String codificacion, File fichero <br/>
+     * <h1>Entradas: </h1>String codificacion<br/>
      * <h1>Salidas: </h1>Ninguna
      *
      * @param codificacion
@@ -52,22 +52,22 @@ public class FileAccessText{
     }
 
     /**
-     * <h1>Cabecera: </h1>public static void escribirCodificacionFichero(String codificacion, File fichero, String formato)<br/>
+     * <h1>Cabecera: </h1> public static void escribirClientesFichero(List<String> lista, String formato) <br/>
      * <h1>Descripción: </h1> Método para escribir en el fichero dado la lista de clientes <br/>
      * <h1>Precondiciones: </h1>Fichero creado y lista diferente de null <br/>
      * <h1>Postocondiciones: </h1>Lista introducida en el fichero <br/>
      * <br/>
-     * <h1>Entradas: </h1>List<Cliente> lista, File fichero, String formato <br/>
+     * <h1>Entradas: </h1>List<Cliente> lista, String formato <br/>
      * <h1>Salidas: </h1>Ninguna
      *
      * @param lista
      * @param formato
      */
-    public static void escribirClientesFichero(List<Cliente> lista, String formato) {
+    public static void escribirClientesFichero(List<String> lista, String formato) {
 
         try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(ficheroText, true)), leerFicheroText(ficheroConfiguracion))) {
-            for (Cliente cliente:lista){
-                osw.write(cliente.toString());
+            for (String cliente:lista){
+                osw.write(cliente);
                 osw.write(System.lineSeparator());
             }
         } catch (IOException e) {
@@ -77,15 +77,9 @@ public class FileAccessText{
 
     /**
      * <h1>Cabecera: </h1>private static String leerFicheroText(File fichero)<br/>
-     * <h1>Descripción: </h1> Método para leer el fichero de texto <br/>
-     * <h1>Precondiciones: </h1>Fichero creado<br/>
-     * <h1>Postocondiciones: </h1>Formato leido<br/>
-     * <br/>
-     * <h1>Entradas: </h1>File fichero<br/>
-     * <h1>Salidas: </h1>String formato
+     * <h1>Descripción: </h1> Método para leer el fichero de texto dado <br/>
      *
      * @param fichero
-     * @return formato
      */
     private static String leerFicheroText(File fichero){
         String formato = null;

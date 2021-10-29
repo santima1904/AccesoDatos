@@ -45,11 +45,11 @@ public class Cliente {
 
     //Constructor por defecto
     public Cliente() {
-        this.nombre = " ";
-        this.apellidos = " ";
-        this.dni = " ";
-        this.numTelefono = " ";
-        this.direccion = " ";
+        this.nombre = "Santi";
+        this.apellidos = "PATATA";
+        this.dni = "12345678T";
+        this.numTelefono = "123456789";
+        this.direccion = "PATATATTATATTA";
     }
 
     //Getters and setters
