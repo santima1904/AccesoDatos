@@ -34,15 +34,18 @@ public class Cliente {
     private String direccion;
 
     //Constantes
-    public final static int LONGITUD_MAX = 30;
+    public final static int LONGITUD_MAX_NOMBRE = 25;
+    public final static int LONGITUD_MAX_DIRECCION = 30;
+    public final static int LONGITUD_MAX_TELEFONO_DNI = 9;
+
     //Constructor
     //Constructor con parámetros
     public Cliente(String nombre, String apellidos, String dni, String numTelefono, String direccion) {
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.dni = dni;
-        this.numTelefono = numTelefono;
-        this.direccion = direccion;
+        this.nombre = rellenarEspacios(nombre, LONGITUD_MAX_NOMBRE);
+        this.apellidos = rellenarEspacios(apellidos, LONGITUD_MAX_NOMBRE);
+        this.dni = rellenarEspacios(dni, LONGITUD_MAX_TELEFONO_DNI);
+        this.numTelefono = rellenarEspacios(numTelefono, LONGITUD_MAX_TELEFONO_DNI);
+        this.direccion = rellenarEspacios(direccion, LONGITUD_MAX_DIRECCION);
     }
 
     //Constructor por defecto
@@ -102,6 +105,14 @@ public class Cliente {
      */
     @Override
     public String toString() {
-        return  nombre + "," + apellidos + "," + dni + "," + numTelefono + "," + direccion;
+        return  nombre + " , " + apellidos + " , " + dni + " , " + numTelefono + " , " + direccion;
+    }
+
+    //Métodos
+    private String rellenarEspacios(String atributo, int longitudmax){
+        StringBuilder strb = new StringBuilder("%-");
+        strb.append(longitudmax).append("s");
+
+        return String.format(strb.toString(),atributo);
     }
 }

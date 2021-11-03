@@ -11,7 +11,7 @@ public class FileAccessObject {
     //Constantes
     public static final String FICHERO_CLIENTES = "clientes.bin";
     public static final String FICHERO_INDICE = "indice_clientes.bin";
-    public static final int LONGITUD_MAXIMA = 98;//Longitud máxma del cliente
+    public static final int LONGITUD_MAXIMA = 110;//Longitud máxma del cliente
 
     //Propiedades estáticas
     private static File ficheroClientes = new File(FICHERO_CLIENTES);
@@ -32,6 +32,7 @@ public class FileAccessObject {
     public static void escribirCliente(Cliente cliente){
        try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(ficheroClientes, true))){
            dos.writeBytes(cliente.toString());
+           //dos.writeBytes("\n");
        } catch (FileNotFoundException e) {
            e.printStackTrace();
        } catch (IOException e) {
