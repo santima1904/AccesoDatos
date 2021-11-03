@@ -33,6 +33,8 @@ public class Cliente {
     private String numTelefono;
     private String direccion;
 
+    //Constantes
+    public final static int LONGITUD_MAX = 30;
     //Constructor
     //Constructor con parámetros
     public Cliente(String nombre, String apellidos, String dni, String numTelefono, String direccion) {

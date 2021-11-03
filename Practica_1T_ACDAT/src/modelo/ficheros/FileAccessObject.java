@@ -75,25 +75,14 @@ public class FileAccessObject {
      * <br/>
      * <h1>Entradas: </h1>String dni <br/>
      * <h1>Salidas: </h1>int
-     *
-     * @param dni
      */
-    public static int buscarPosicion(String dni) {
+    public static int getLongitudFichero() {
         int contador = -1;
-        boolean valido = false, salir = false;
-        String linea;
-        String[] atributosCliente;
+        boolean salir = false;
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ficheroClientes)))) {
             try{
-                while (!valido||!salir) {
-                    linea = br.readLine();
-                    atributosCliente = linea.split(",");
-                    valido = comprobarDni(atributosCliente[2], dni);
-                    if (valido){
-                        salir = true;
-                    }
-
+                while (br.readLine() != null && !salir) {
                     contador++;
                 }
             }catch (EOFException e){
@@ -119,10 +108,10 @@ public class FileAccessObject {
      */
     public static void escribirFicheroIndice(String dni, int posicion){
 
-        try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(ficheroIndice, true))){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroIndice, true))){
             if (posicion != -1) {
-                dos.writeInt(posicion);
-                dos.writeBytes("," + dni);
+                bw.write(posicion+","+dni);
+                bw.newLine();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -145,18 +134,18 @@ public class FileAccessObject {
     public static int buscarPosicionFicheroIndice(String dni) {
         int posicion = -1;
         boolean valido = false, salir = false;
-        String linea, dniCliente;
-        String[] atributosCliente;
+        String dniCliente, linea;
+        String [] atributoscliente;
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ficheroClientes)))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ficheroIndice))) {
             try{
                 while (!valido||!salir) {
                     linea = br.readLine();
-                    atributosCliente = linea.split(",");
-                    dniCliente = atributosCliente[1];
+                    atributoscliente = linea.split(",");
+                    dniCliente = atributoscliente[1];
                     valido = comprobarDni(dniCliente, dni);
                     if (valido){
-                        posicion = Integer.parseInt(atributosCliente[1]);
+                        posicion = Integer.parseInt(atributoscliente[0]);
                         salir = true;
                     }
                 }
@@ -170,18 +159,23 @@ public class FileAccessObject {
         return posicion;
     }
 
+    /**
+     *
+     * @param posicion
+     * @return
+     */
     public static String buscarClientePorPosicion(int posicion){
         String cliente = null;
 
         try(RandomAccessFile raf = new RandomAccessFile(ficheroClientes, "rws")){
-            raf.seek(posicion*LONGITUD_MAXIMA);
+            raf.seek((long) posicion *LONGITUD_MAXIMA);
             cliente = raf.readLine();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return cliente;
+        return cliente.substring(LONGITUD_MAXIMA);
     }
 
     /**
