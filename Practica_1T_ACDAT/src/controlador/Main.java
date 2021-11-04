@@ -3,7 +3,7 @@ package controlador;
 import modelo.Cliente;
 import modelo.ficheros.FileAccessObject;
 import modelo.ficheros.FileAccessText;
-import vista.Validacion;
+
 
 import java.util.ArrayList;
 import java.util.List;

@@ -176,7 +176,7 @@ public class FileAccessObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return cliente.substring(LONGITUD_MAXIMA);
+        return cliente.substring(5,LONGITUD_MAXIMA);
     }
 
     /**
