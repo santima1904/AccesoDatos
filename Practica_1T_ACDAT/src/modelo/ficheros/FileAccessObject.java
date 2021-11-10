@@ -31,7 +31,7 @@ public class FileAccessObject {
      */
     public static void escribirCliente(Cliente cliente){
        try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(ficheroClientes, true))){
-           dos.writeBytes(cliente.toString());
+           dos.write(cliente.toString().getBytes());
            //dos.writeBytes("\n");
        } catch (FileNotFoundException e) {
            e.printStackTrace();
@@ -78,18 +78,16 @@ public class FileAccessObject {
      * <h1>Salidas: </h1>int
      */
     public static int getLongitudFichero() {
-        int contador = -1;
+        int contador = -1, numCliente = 1;
         boolean salir = false;
+        String linea = "";
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ficheroClientes)))) {
-            try{
-                while (br.readLine() != null && !salir) {
-                    contador++;
-                }
-            }catch (EOFException e){
-                salir = true;
+            linea = br.readLine();
+            while (linea.substring(LONGITUD_MAXIMA*numCliente) != null) {
+                contador++;
+                numCliente++;
             }
-
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
