@@ -11,11 +11,13 @@ public class FileAccessObject {
     //Constantes
     public static final String FICHERO_CLIENTES = "clientes.bin";
     public static final String FICHERO_INDICE = "indice_clientes.bin";
+    public static final String FICHERO_INDICE_AUX = "indice_aux.bin";
     public static final int LONGITUD_MAXIMA = 110;//Longitud máxma del cliente
 
     //Propiedades estáticas
     private static File ficheroClientes = new File(FICHERO_CLIENTES);
     private static File ficheroIndice = new File(FICHERO_INDICE);
+    private static File ficheroIndiceAux = new File(FICHERO_INDICE_AUX);
 
 
     /**
@@ -50,11 +52,12 @@ public class FileAccessObject {
      * <h1>Salidas: </h1>Ninguna
      *
      */
-    public static List<String> leerClientes(){
+    public static List<String> leerClientes(boolean ficheroCliente){
         String linea;
         List<String> lista = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ficheroClientes)))) {
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(elegirFichero(ficheroCliente))))) {
                 do {
                     linea = br.readLine();
                     if (linea != null) {
@@ -66,6 +69,14 @@ public class FileAccessObject {
             }
 
         return lista;
+    }
+
+    private static String elegirFichero(boolean ficheroCliente){
+        String nombreFichero = " ";
+
+         nombreFichero = (ficheroCliente) ? FICHERO_CLIENTES : FICHERO_INDICE;
+
+        return nombreFichero;
     }
 
         /**
@@ -83,11 +94,16 @@ public class FileAccessObject {
         String linea = "";
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ficheroClientes)))) {
-            linea = br.readLine();
-            while (linea.substring(LONGITUD_MAXIMA*numCliente) != null) {
-                contador++;
-                numCliente++;
+            try{
+                linea = br.readLine();
+                while (linea.substring(LONGITUD_MAXIMA*numCliente) != null&&!salir) {
+                    contador++;
+                    numCliente++;
+                }
+            }catch (StringIndexOutOfBoundsException e){
+                salir = true;
             }
+
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -117,6 +133,37 @@ public class FileAccessObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void borrarClienteFicheroIndice(String dni, List<String> listadoFicheroIndice){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroIndiceAux, true))){
+            for (String linea:encontrarDniBorrado(dni,listadoFicheroIndice)) {
+                bw.write(linea);
+                bw.newLine();
+            }
+            ficheroIndice = ficheroIndiceAux;
+            ficheroIndiceAux.delete();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static List<String> encontrarDniBorrado(String dni, List<String> listadoFicheroIndice){
+       String linea;
+       String [] atributoscliente;
+       List<String> listadoFiltrado = new ArrayList<>();
+
+        for(int i = 0;i<listadoFicheroIndice.size();i++){
+            linea = listadoFicheroIndice.get(i);
+            atributoscliente = linea.split(",");
+            if (comprobarDni(atributoscliente[1], dni)){
+                linea = "-1"+","+dni;
+            }
+            listadoFiltrado.add(linea);
+        }
+        return listadoFiltrado;
     }
 
     /**
@@ -174,7 +221,7 @@ public class FileAccessObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return cliente.substring(5,LONGITUD_MAXIMA);
+        return cliente.substring(LONGITUD_MAXIMA);
     }
 
     /**
