@@ -1,4 +1,4 @@
-package vista;
+package vista2;
 
 public class Menu {
 
@@ -15,6 +15,9 @@ public class Menu {
             """;
 
     public static final String INSERTAR_CLIENTE = "Inserte un nuevo cliente: ";
+    public static final String SALIR = "Desea salir: "+
+            "\n"+"1. Sí"+
+            "\n"+"2. No";
 
     //Métodos
     public static void menu(){
@@ -27,5 +30,9 @@ public class Menu {
 
     public static void mostrarCliente(String cliente){
         System.out.println(cliente);
+    }
+
+    public static void salir(){
+        System.out.println(SALIR);
     }
 }

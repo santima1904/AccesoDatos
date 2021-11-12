@@ -1,6 +1,6 @@
 package modelo.ficheros;
 
-import modelo.Cliente;
+import modelo.clasesBasicas.Cliente;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,13 +11,11 @@ public class FileAccessObject {
     //Constantes
     public static final String FICHERO_CLIENTES = "clientes.bin";
     public static final String FICHERO_INDICE = "indice_clientes.bin";
-    public static final String FICHERO_INDICE_AUX = "indice_aux.bin";
     public static final int LONGITUD_MAXIMA = 110;//Longitud máxma del cliente
 
     //Propiedades estáticas
     private static File ficheroClientes = new File(FICHERO_CLIENTES);
     private static File ficheroIndice = new File(FICHERO_INDICE);
-    private static File ficheroIndiceAux = new File(FICHERO_INDICE_AUX);
 
 
     /**
@@ -34,12 +32,12 @@ public class FileAccessObject {
     public static void escribirCliente(Cliente cliente){
        try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(ficheroClientes, true))){
            dos.write(cliente.toString().getBytes());
-           //dos.writeBytes("\n");
        } catch (FileNotFoundException e) {
            e.printStackTrace();
        } catch (IOException e) {
            e.printStackTrace();
        }
+       escribirFicheroIndice(cliente.getDni(), getLongitudFichero());
     }
 
     /**
@@ -88,7 +86,7 @@ public class FileAccessObject {
      * <h1>Entradas: </h1>String dni <br/>
      * <h1>Salidas: </h1>int
      */
-    public static int getLongitudFichero() {
+    private static int getLongitudFichero() {
         int contador = -1, numCliente = 1;
         boolean salir = false;
         String linea = "";
@@ -121,8 +119,7 @@ public class FileAccessObject {
      *
      * @return formato
      */
-    public static void escribirFicheroIndice(String dni, int posicion){
-
+    private static void escribirFicheroIndice(String dni, int posicion){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroIndice, true))){
             if (posicion != -1) {
                 bw.write(posicion+","+dni);
@@ -136,13 +133,11 @@ public class FileAccessObject {
     }
 
     public static void borrarClienteFicheroIndice(String dni, List<String> listadoFicheroIndice){
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroIndiceAux, true))){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroIndice, false))){
             for (String linea:encontrarDniBorrado(dni,listadoFicheroIndice)) {
                 bw.write(linea);
                 bw.newLine();
             }
-            ficheroIndice = ficheroIndiceAux;
-            ficheroIndiceAux.delete();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -180,16 +175,15 @@ public class FileAccessObject {
     public static int buscarPosicionFicheroIndice(String dni) {
         int posicion = -1;
         boolean valido = false, salir = false;
-        String dniCliente, linea;
+        String linea = "";
         String [] atributoscliente;
 
         try (BufferedReader br = new BufferedReader(new FileReader(ficheroIndice))) {
             try{
-                while (!valido||!salir) {
+                while (!valido||!salir){
                     linea = br.readLine();
                     atributoscliente = linea.split(",");
-                    dniCliente = atributoscliente[1];
-                    valido = comprobarDni(dniCliente, dni);
+                    valido = comprobarDni(atributoscliente[1], dni);
                     if (valido){
                         posicion = Integer.parseInt(atributoscliente[0]);
                         salir = true;
@@ -198,7 +192,6 @@ public class FileAccessObject {
             }catch (EOFException e){
                 salir = true;
             }
-
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -212,16 +205,22 @@ public class FileAccessObject {
      */
     public static String buscarClientePorPosicion(int posicion){
         String cliente = null;
+        String cadena =" ";
 
-        try(RandomAccessFile raf = new RandomAccessFile(ficheroClientes, "rws")){
-            raf.seek((long) posicion *LONGITUD_MAXIMA);
-            cliente = raf.readLine();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (posicion == -1){
+            cadena = "No encontrado";
+        }else {
+            try (RandomAccessFile raf = new RandomAccessFile(ficheroClientes, "rws")) {
+                raf.seek((long) posicion * LONGITUD_MAXIMA);
+                cliente = raf.readLine();
+                cadena = cliente.substring(0,LONGITUD_MAXIMA);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return cliente.substring(LONGITUD_MAXIMA);
+        return cadena;
     }
 
     /**

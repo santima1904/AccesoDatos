@@ -1,4 +1,4 @@
-package vista;
+package vista2;
 
 import java.util.Scanner;
 
@@ -128,6 +128,25 @@ public class Validacion {
         while(opcion < 0 || opcion > 5);
 
         return opcion;
+    }
+
+    /**
+     * <h1>Cabecera: </h1>public static int pedirOpcion()<br/>
+     * <h1>Descripción: </h1> Método para pedir la opción del menú por teclado <br/>
+     */
+    public static boolean pedirSalir(){
+        boolean salir = false;
+        int numeroSalir = 0;
+
+        do{
+            numeroSalir = tecladoInt.nextInt();
+        }
+        while(numeroSalir == 1 || numeroSalir == 2);
+
+        if (numeroSalir == 1){
+            salir = true;
+        }
+        return salir;
     }
 
     /**

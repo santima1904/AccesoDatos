@@ -1,6 +1,5 @@
 package modelo.ficheros;
 
-import modelo.Cliente;
 import java.io.*;
 import java.util.List;
 
@@ -63,7 +62,7 @@ public class FileAccessText{
      * @param lista
      * @param formato
      */
-    public static void escribirClientesFichero(List<String> lista, String formato) {
+    public static void escribirClientesFichero(List<String> lista) {
 
         try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(ficheroText, true)), leerFicheroText(ficheroConfiguracion))) {
             for (String cliente:lista){

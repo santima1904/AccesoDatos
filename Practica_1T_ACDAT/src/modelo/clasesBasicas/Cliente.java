@@ -22,7 +22,7 @@
  * - public void toString()
  */
 
-package modelo;
+package modelo.clasesBasicas;
 
 public class Cliente {
 
