@@ -47,7 +47,6 @@ public class ConexionBBdd {
         return sentencia;
     }
 
-
     /**
      * <b>Cabecera: </b> public static void cerrarConexion(Connection conexion) </br>
      * <b>Precondiciones: </b> Connection creado </br>

@@ -1,47 +1,34 @@
 package controlador;
 
 import modelo.conexionBBdd.ConexionBBdd;
+import modelo.conexionBBdd.ConexionDDL;
+import modelo.conexionBBdd.ConexionDML;
 import modelo.conexionBBdd.MiConexion;
 import vista.Menu;
 import vista.Validacion;
 
-import java.beans.Statement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class Main {
     public static void main(String[] args) {
-//
-//        try {
-//        Connection connexionBaseDatos = ConexionBBdd.abrirConexion(conexion1);
-//        Statement s = connexionBaseDatos.createStatement();
-//        ResultSet rs = s.executeQuery("SELECT * FROM Cliente");
-//        System.out.println("Conexión realizada.");
-//        while ((rs.next())) {
-//            System.out.println(rs.getString(1) +" "+ rs.getString(2));
-//        }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
 
-        Connection conexion = ConexionBBdd.abrirConexion(new MiConexion());
-        Statement statement = (Statement) ConexionBBdd.crearStatement(conexion);
+        MiConexion miConexion = new MiConexion();
         int opcion = 1;
 
         while (opcion != 0) {
             opcion = Validacion.pedirOpcion();
             switch (opcion) {
                 case 1:
-                    //Ejecutar consulta
+                    System.out.println(ConexionDML.getSelectBBDD(ConexionBBdd.abrirConexion(miConexion), "SELECT * FROM Cliente WHERE Nombre = 'Albert'"));
                     break;
 
                 case 2:
-                    //Ejecutar DML
+                    ConexionDML.insertarDatos(ConexionBBdd.abrirConexion(miConexion), "INSERT INTO Cliente " +
+                     "Values ('Chicken', 'Little', 1)");
                     break;
 
                 case 3:
-                    //Ejecutar DDL
+                    ConexionDDL.addTable(ConexionBBdd.abrirConexion(miConexion), Validacion.pedirConsulta());
+                    ConexionDDL.addColumn(ConexionBBdd.abrirConexion(miConexion), "ALTER TABLE Cliente \n" +
+                            "ADD id int");
                     break;
 
                 case 4:
