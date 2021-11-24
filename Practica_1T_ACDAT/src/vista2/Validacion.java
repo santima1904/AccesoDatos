@@ -141,7 +141,7 @@ public class Validacion {
         do{
             numeroSalir = tecladoInt.nextInt();
         }
-        while(numeroSalir == 1 || numeroSalir == 2);
+        while(numeroSalir != 1 && numeroSalir != 2);
 
         if (numeroSalir == 1){
             salir = true;

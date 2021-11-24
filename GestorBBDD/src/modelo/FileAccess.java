@@ -10,7 +10,7 @@ public class FileAccess {
     public static final String NOMBRE_FICHERO = "configuracion.txt";
 
     //Métodos
-    public File crearFichero() {
+    public static File crearFichero() {
         File fichero = new File(NOMBRE_FICHERO);
 
         try {
@@ -52,22 +52,16 @@ public class FileAccess {
      * Postcondiciones: Devuelve una lista con los contenidos de los objetos del fichero
      */
     public static MiConexion leerFichero(File fichero){
-        ObjectInputStream ois = null;
-        Object aux = null;
+        MiConexion oconexion = null;
 
-        try {
-            ois = new ObjectInputStream(new FileInputStream(fichero));
-            aux = ois.readObject();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }finally {
-            cerrarObjectInput(ois);
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fichero))) {
+            oconexion = (MiConexion) ois.readObject();
+        }catch (EOFException end){
         }
-        return (MiConexion)aux;
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return oconexion;
         }
 
     /**

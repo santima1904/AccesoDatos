@@ -4,15 +4,26 @@ import java.sql.*;
 
 public class ConexionDML {
 
-    public static void insertarDatos(Connection connection, String sentencia){
+    /**
+     * Cabecera: public static int insertarDatos(Connection connection, String sentencia)
+     * Descripcion: Metodo para insertar datos en la base de datos
+     *
+     * @param connection
+     * @param sentencia
+     * @return
+     */
+    public static int insertarDatos(Connection connection, String sentencia){
         Statement statement = ConexionBBdd.crearStatement(connection);
+        int resultado = 0;
         try {
-            statement.executeUpdate(sentencia);
+            resultado =  statement.executeUpdate(sentencia);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return resultado;
     }
 
+    /*
     public static int getIntBBDD(Connection connection, String sentencia){
         int id = 0;
         Statement statement = ConexionBBdd.crearStatement(connection);
@@ -30,6 +41,16 @@ public class ConexionDML {
         return id;
     }
 
+     */
+
+    /**
+     * Cabecera: public static String getSelectBBDD(Connection connection, String sentencia)
+     * Descripcion: Metodo para consultar datos en la base de datos
+     *
+     * @param connection
+     * @param sentencia
+     * @return
+     */
     public static String getSelectBBDD(Connection connection, String sentencia){
         String consulta = "";
         ResultSetMetaData rsm;

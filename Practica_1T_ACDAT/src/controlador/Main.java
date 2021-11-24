@@ -8,6 +8,8 @@ import vista2.Validacion;
 
 public class Main {
     public static void main(String[] args) {
+    //TODO Hacer todos los sumaries, revisar los hechos que hay que cambiarlos
+        // TODO validar dni real
 
         boolean salir = false;
         FileAccessText.inicializarFichero();
@@ -27,6 +29,7 @@ public class Main {
 
                 case 3:
                     FileAccessObject.borrarClienteFicheroIndice(Validacion.pedirDni(), FileAccessObject.leerClientes(false));
+                    //TODO comprobar si se ha borrado el cliente para mostrarlo por pantalla
                     break;
 
                 case 4:
@@ -41,7 +44,6 @@ public class Main {
                     Menu.salir();
                     salir = Validacion.pedirSalir();
                     break;
-
             }
         }
     }
