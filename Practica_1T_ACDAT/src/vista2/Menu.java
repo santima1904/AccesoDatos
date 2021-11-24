@@ -35,4 +35,8 @@ public class Menu {
     public static void salir(){
         System.out.println(SALIR);
     }
+
+    public static void mostrarPersonaBorrada(String mensaje){
+        System.out.println(mensaje);
+    }
 }

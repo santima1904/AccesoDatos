@@ -12,6 +12,7 @@ public class Main {
         // TODO validar dni real
 
         boolean salir = false;
+        String dniBorrado;
         FileAccessText.inicializarFichero();
 
         while(!salir){
@@ -28,8 +29,9 @@ public class Main {
                     break;
 
                 case 3:
-                    FileAccessObject.borrarClienteFicheroIndice(Validacion.pedirDni(), FileAccessObject.leerClientes(false));
-                    //TODO comprobar si se ha borrado el cliente para mostrarlo por pantalla
+                    dniBorrado = Validacion.pedirDni();
+                    FileAccessObject.borrarClienteFicheroIndice(dniBorrado, FileAccessObject.leerClientes(false));
+                    Menu.mostrarPersonaBorrada(comprobarPersonaBorrada( FileAccessObject.buscarPosicionFicheroIndice(dniBorrado)));
                     break;
 
                 case 4:
@@ -46,5 +48,14 @@ public class Main {
                     break;
             }
         }
+    }
+
+
+    private static String comprobarPersonaBorrada(int posicion){
+        String mensaje = "Se ha borrado correctamente";
+        if (posicion != -1){
+            mensaje = "Ha ocurrido un error";
+        }
+        return mensaje;
     }
 }

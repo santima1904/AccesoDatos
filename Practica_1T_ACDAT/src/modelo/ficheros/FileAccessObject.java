@@ -199,10 +199,17 @@ public class FileAccessObject {
     }
 
     /**
+     * <h1>Cabecera: </h1>public static String buscarClientePorPosicion(int posicion)<br/>
+     * <h1>Descripción: </h1> Método para buscar un cliente con la posicion dada en el ficherode clientes <br/>
+     * <h1>Precondiciones: </h1>Fichero creado y posicion mayor que -1 <br/>
+     * <h1>Postocondiciones: </h1>Cliente encontrado o mandar mensaje de no encontrado<br/>
+     * <br/>
+     * <h1>Entradas: </h1>String dni <br/>
+     * <h1>Salidas: </h1>int
      *
      * @param posicion
-     * @return
-     */
+     * @return String
+     * */
     public static String buscarClientePorPosicion(int posicion){
         String cliente = null;
         String cadena =" ";
@@ -224,13 +231,14 @@ public class FileAccessObject {
     }
 
     /**
-     * <h1>Cabecera: </h1>private static boolean comprobarDni(Cliente cliente, String dni)<br/>
+     * <h1>Cabecera: </h1>private static boolean comprobarDni(String dniCliente, String dni)<br/>
      * <h1>Descripción: </h1> Método para comprobar que el dni dado y el del cliente coinciden<br/>
      * <br/>
-     * <h1>Entradas: </h1>Cliente cliente, String dni<br/>
+     * <h1>Entradas: </h1>String dniCliente, String dni<br/>
      * <h1>Salidas: </h1>boolean
      *
      * @param dni
+     * @param dniCliente
      */
     private static boolean comprobarDni(String dniCliente, String dni) {
         boolean igual = false;

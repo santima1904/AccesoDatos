@@ -1,6 +1,8 @@
 package vista2;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Validacion {
 
@@ -54,13 +56,18 @@ public class Validacion {
      * <h1>Descripción: </h1> Método para pedir el dni por teclado <br/>
      */
     public static String pedirDni(){
-        String dni;
+        String dni = " ";
+        boolean valido = false;
 
-        do{
-            System.out.println(INSERTAR_DNI);
-            dni = teclado.nextLine();
+       while(!valido){
+           System.out.println(INSERTAR_DNI);
+           dni = teclado.nextLine();
+           Pattern dniPattern = Pattern.compile("(\\d{1,8})");
+           Matcher m = dniPattern.matcher(dni);
+           if(m.matches()){
+               valido = true;
+           }
         }
-        while(dni.length() != 9);
 
         return dni;
     }
