@@ -54,12 +54,11 @@ public class FileAccessObject {
         String linea;
         List<String> lista = new ArrayList<>();
 
-
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(elegirFichero(ficheroCliente))))) {
                 do {
                     linea = br.readLine();
                     if (linea != null) {
-                        lista.add(linea);
+                            lista.add(linea);
                     }
                 } while (linea != null);
             } catch (IOException e) {

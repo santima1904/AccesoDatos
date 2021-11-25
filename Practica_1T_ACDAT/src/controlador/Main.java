@@ -8,8 +8,8 @@ import vista2.Validacion;
 
 public class Main {
     public static void main(String[] args) {
-    //TODO Hacer todos los sumaries, revisar los hechos que hay que cambiarlos
-        // TODO validar dni real
+        //TODO Hacer todos los sumaries, revisar los hechos que hay que cambiarlos
+        //TODO Corregir la exportación para que no lea los borrados
 
         boolean salir = false;
         String dniBorrado;

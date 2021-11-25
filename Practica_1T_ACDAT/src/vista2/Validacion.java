@@ -62,14 +62,26 @@ public class Validacion {
        while(!valido){
            System.out.println(INSERTAR_DNI);
            dni = teclado.nextLine();
-           Pattern dniPattern = Pattern.compile("(\\d{1,8})");
-           Matcher m = dniPattern.matcher(dni);
-           if(m.matches()){
-               valido = true;
+           if (dni.length() == 9) {
+               if (dni.charAt(8) == calcularLetra(dni.substring(0, 8))) {
+                   valido = true;
+               }
            }
         }
 
         return dni;
+    }
+
+    /**
+     * <h1>Cabecera: </h1>public static String pedirDni()<br/>
+     * <h1>Descripción: </h1> Método para pedir el dni por teclado <br/>
+     */
+    private static char calcularLetra(String dni){
+        char[] caracteres = {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
+        int modulo= Integer.parseInt(dni)%23;
+        char letra = caracteres[modulo];
+
+        return letra;
     }
 
     /**
