@@ -59,14 +59,27 @@ public class FileAccessText{
      * @param lista
      */
     public static void escribirClientesFichero(List<String> lista) {
-        try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(ficheroText, true)), leerFicheroText(ficheroConfiguracion))) {
+        try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(ficheroText, comprobarFicheroExiste())), leerFicheroText(ficheroConfiguracion))) {
             for (String cliente:lista){
-                osw.write(cliente);
-                osw.write(System.lineSeparator());
+                osw.write(FileAccessObject.buscarClientePorPosicion(Integer.parseInt(cliente.substring(0,1))));
+                osw.write("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Metodo para ver si existe el fichero y sobrescribirlo o no
+     * @return
+     */
+    private static boolean comprobarFicheroExiste(){
+        boolean existe = true;
+
+        if (ficheroText.exists()){
+            existe = false;
+        }
+        return existe;
     }
 
     /**

@@ -4,6 +4,8 @@ import modelo.clasesBasicas.Cliente;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FileAccessObject {
@@ -11,11 +13,13 @@ public class FileAccessObject {
     //Constantes
     public static final String FICHERO_CLIENTES = "clientes.bin";
     public static final String FICHERO_INDICE = "indice_clientes.bin";
+    public static final String FICHERO_AUX = "fichero_aux.bin";
     public static final int LONGITUD_MAXIMA = 110;//Longitud máxma del cliente
 
     //Propiedades estáticas
     private static File ficheroClientes = new File(FICHERO_CLIENTES);
     private static File ficheroIndice = new File(FICHERO_INDICE);
+    private static File ficheroAux = new File(FICHERO_AUX);
 
 
     /**
@@ -50,30 +54,55 @@ public class FileAccessObject {
      * <h1>Salidas: </h1>Ninguna
      *
      */
-    public static List<String> leerClientes(boolean ficheroCliente){
+    public static List<String> leerClientesFicheroIndice(){
         String linea;
-        List<String> lista = new ArrayList<>();
+        List<String> listaClientesNoBorrados = new LinkedList<>();
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(elegirFichero(ficheroCliente))))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FICHERO_INDICE)))) {
                 do {
                     linea = br.readLine();
-                    if (linea != null) {
-                            lista.add(linea);
+                    if (linea != null && comprobarPosicion(linea)) {
+                        listaClientesNoBorrados.add(linea);
                     }
                 } while (linea != null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-        return lista;
+        return listaClientesNoBorrados;
     }
 
-    private static String elegirFichero(boolean ficheroCliente){
-        String nombreFichero = " ";
+    /**
+     * <h1>Cabecera: </h1>private static String leerFicheroText(File fichero)<br/>
+     * <h1>Descripción: </h1> Método para leer el fichero de texto <br/>
+     * <h1>Precondiciones: </h1>Fichero creado<br/>
+     * <h1>Postocondiciones: </h1>Formato leido<br/>
+     * <br/>
+     * <h1>Entradas: </h1>File fichero<br/>
+     * <h1>Salidas: </h1>String formato
+     *
+     * @return formato
+     */
+    private static void escribirFicheroAux(String cliente){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroAux, true))){
+            bw.write(cliente);
+            bw.newLine();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-         nombreFichero = (ficheroCliente) ? FICHERO_CLIENTES : FICHERO_INDICE;
 
-        return nombreFichero;
+    private static boolean comprobarPosicion(String linea){
+        boolean valido = true;
+
+        if (linea.startsWith("-1")) {
+            valido = false;
+        }
+
+        return valido;
     }
 
         /**
@@ -88,7 +117,7 @@ public class FileAccessObject {
     private static int getLongitudFichero() {
         int contador = -1, numCliente = 1;
         boolean salir = false;
-        String linea = "";
+        String linea;
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ficheroClientes)))) {
             try{
@@ -174,7 +203,7 @@ public class FileAccessObject {
     public static int buscarPosicionFicheroIndice(String dni) {
         int posicion = -1;
         boolean valido = false, salir = false;
-        String linea = "";
+        String linea;
         String [] atributoscliente;
 
         try (BufferedReader br = new BufferedReader(new FileReader(ficheroIndice))) {

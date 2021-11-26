@@ -30,7 +30,7 @@ public class Main {
 
                 case 3:
                     dniBorrado = Validacion.pedirDni();
-                    FileAccessObject.borrarClienteFicheroIndice(dniBorrado, FileAccessObject.leerClientes(false));
+                    FileAccessObject.borrarClienteFicheroIndice(dniBorrado, FileAccessObject.leerClientesFicheroIndice());
                     Menu.mostrarPersonaBorrada(comprobarPersonaBorrada( FileAccessObject.buscarPosicionFicheroIndice(dniBorrado)));
                     break;
 
@@ -39,7 +39,7 @@ public class Main {
                     break;
 
                 case 5:
-                    FileAccessText.escribirClientesFichero(FileAccessObject.leerClientes(true));
+                    FileAccessText.escribirClientesFichero(FileAccessObject.leerClientesFicheroIndice());
                     break;
 
                 case 0:
