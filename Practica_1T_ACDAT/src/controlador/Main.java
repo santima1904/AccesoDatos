@@ -9,7 +9,6 @@ import vista2.Validacion;
 public class Main {
     public static void main(String[] args) {
         //TODO Hacer todos los sumaries, revisar los hechos que hay que cambiarlos
-        //TODO Corregir la exportación para que no lea los borrados
 
         boolean salir = false;
         String dniBorrado;
@@ -30,7 +29,8 @@ public class Main {
 
                 case 3:
                     dniBorrado = Validacion.pedirDni();
-                    FileAccessObject.borrarClienteFicheroIndice(dniBorrado, FileAccessObject.leerClientesFicheroIndice());
+                    FileAccessObject.leerClientesFicheroIndice();
+                    FileAccessObject.leerClientesFicheroAux(dniBorrado);
                     Menu.mostrarPersonaBorrada(comprobarPersonaBorrada( FileAccessObject.buscarPosicionFicheroIndice(dniBorrado)));
                     break;
 
@@ -39,7 +39,7 @@ public class Main {
                     break;
 
                 case 5:
-                    FileAccessText.escribirClientesFichero(FileAccessObject.leerClientesFicheroIndice());
+                    FileAccessObject.exportarFicheroCliente();
                     break;
 
                 case 0:

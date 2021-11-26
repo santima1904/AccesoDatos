@@ -54,22 +54,35 @@ public class FileAccessObject {
      * <h1>Salidas: </h1>Ninguna
      *
      */
-    public static List<String> leerClientesFicheroIndice(){
+    public static void leerClientesFicheroIndice(){
         String linea;
-        List<String> listaClientesNoBorrados = new LinkedList<>();
-
+        inicializarFichero(FICHERO_AUX);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FICHERO_INDICE)))) {
                 do {
                     linea = br.readLine();
-                    if (linea != null && comprobarPosicion(linea)) {
-                        listaClientesNoBorrados.add(linea);
+                    if (linea != null) {
+                        escribirFichero(linea, FICHERO_AUX);
                     }
                 } while (linea != null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+    }
 
-        return listaClientesNoBorrados;
+    public static void exportarFicheroCliente(){
+        String linea;
+        FileAccessText.inicializarFicheroExiste();
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FICHERO_INDICE)))) {
+            do {
+                linea = br.readLine();
+                if (linea != null && comprobarPosicion(linea)) {
+                   FileAccessText.escribirClientesFichero(buscarClientePorPosicion(Integer.parseInt(linea.substring(0,1))));
+                }
+            } while (linea != null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -83,10 +96,47 @@ public class FileAccessObject {
      *
      * @return formato
      */
-    private static void escribirFicheroAux(String cliente){
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroAux, true))){
+    private static void escribirFichero(String cliente, String nombreFichero){
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(nombreFichero, true))){
             bw.write(cliente);
             bw.newLine();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * <h1>Cabecera: </h1>public static List<String> leerClientes()<br/>
+     * <h1>Descripción: </h1> Método para guardar el contenido del fichero en una lista <br/>
+     * <h1>Precondiciones: </h1>Fichero creado<br/>
+     * <h1>Postocondiciones: </h1>Contenido insertado en la lista<br/>
+     * <br/>
+     * <h1>Entradas: </h1>Ninguna<br/>
+     * <h1>Salidas: </h1>Ninguna
+     *
+     */
+    public static void leerClientesFicheroAux(String dni){
+        String linea;
+        inicializarFichero(FICHERO_INDICE);
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FICHERO_AUX)))) {
+            do {
+                linea = br.readLine();
+                if (linea != null) {
+                    escribirFichero(encontrarDniBorrado(dni, linea), FICHERO_INDICE);
+                }
+            } while (linea != null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void inicializarFichero(String nombreFichero){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(nombreFichero, false))){
+            bw.write("");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -160,33 +210,15 @@ public class FileAccessObject {
         }
     }
 
-    public static void borrarClienteFicheroIndice(String dni, List<String> listadoFicheroIndice){
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroIndice, false))){
-            for (String linea:encontrarDniBorrado(dni,listadoFicheroIndice)) {
-                bw.write(linea);
-                bw.newLine();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private static List<String> encontrarDniBorrado(String dni, List<String> listadoFicheroIndice){
-       String linea;
+    private static String encontrarDniBorrado(String dni, String linea){
        String [] atributoscliente;
-       List<String> listadoFiltrado = new ArrayList<>();
 
-        for(int i = 0;i<listadoFicheroIndice.size();i++){
-            linea = listadoFicheroIndice.get(i);
             atributoscliente = linea.split(",");
             if (comprobarDni(atributoscliente[1], dni)){
                 linea = "-1"+","+dni;
             }
-            listadoFiltrado.add(linea);
-        }
-        return listadoFiltrado;
+        return linea;
     }
 
     /**
