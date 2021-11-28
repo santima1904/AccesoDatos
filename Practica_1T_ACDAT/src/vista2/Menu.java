@@ -36,7 +36,7 @@ public class Menu {
         System.out.println(SALIR);
     }
 
-    public static void mostrarPersonaBorrada(String mensaje){
+    public static void mostrarMensajeComprobacionPersonaBorrada(String mensaje){
         System.out.println(mensaje);
     }
 }

@@ -1,7 +1,7 @@
 package controlador;
 
 import modelo.clasesBasicas.Cliente;
-import modelo.ficheros.FileAccessObject;
+import modelo.ficheros.FileAccessBinary;
 import modelo.ficheros.FileAccessText;
 import vista2.Menu;
 import vista2.Validacion;
@@ -20,18 +20,18 @@ public class Main {
 
                 case 1:
                     Menu.insertarCliente();
-                    FileAccessObject.escribirCliente(new Cliente(Validacion.pedirNombre(), Validacion.pedirApellidos(), Validacion.pedirDni(), Validacion.pedirTlfn(), Validacion.pedirDireccion()));
+                    FileAccessBinary.escribirCliente(new Cliente(Validacion.pedirNombre(), Validacion.pedirApellidos(), Validacion.pedirDni(), Validacion.pedirTlfn(), Validacion.pedirDireccion()));
                     break;
 
                 case 2:
-                    Menu.mostrarCliente(FileAccessObject.buscarClientePorPosicion(FileAccessObject.buscarPosicionFicheroIndice(Validacion.pedirDni())));
+                    Menu.mostrarCliente(FileAccessBinary.buscarClientePorPosicion(FileAccessBinary.buscarPosicionFicheroIndice(Validacion.pedirDni())));
                     break;
 
                 case 3:
                     dniBorrado = Validacion.pedirDni();
-                    FileAccessObject.leerClientesFicheroIndice();
-                    FileAccessObject.leerClientesFicheroAux(dniBorrado);
-                    Menu.mostrarPersonaBorrada(comprobarPersonaBorrada( FileAccessObject.buscarPosicionFicheroIndice(dniBorrado)));
+                    FileAccessBinary.leerClientesFicheroIndice();
+                    FileAccessBinary.leerClientesFicheroAux(dniBorrado);
+                    Menu.mostrarMensajeComprobacionPersonaBorrada(comprobarPersonaBorrada( FileAccessBinary.buscarPosicionFicheroIndice(dniBorrado)));
                     break;
 
                 case 4:
@@ -39,7 +39,7 @@ public class Main {
                     break;
 
                 case 5:
-                    FileAccessObject.exportarFicheroCliente();
+                    FileAccessBinary.exportarFicheroCliente();
                     break;
 
                 case 0:

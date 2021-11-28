@@ -20,6 +20,7 @@
  * - public String getDireccion()
  * - public void setDireccion(String direccion)
  * - public void toString()
+ * - private String rellenarEspacios(String atributo, int longitudmax)
  */
 
 package modelo.clasesBasicas;
@@ -96,19 +97,21 @@ public class Cliente {
 
 
     //Métodos de la clase Object
-
-    /**
-     * <h1>Cabecera: </h1>public String toString()<br/>
-     * <h1>Descripción :</h1> Método para convertir a String todos los atributos de la clase
-     *
-     * @return String
-     */
     @Override
     public String toString() {
         return  nombre + " , " + apellidos + " , " + dni + " , " + numTelefono + " , " + direccion;
     }
 
     //Métodos
+
+    /**
+     * <h1>Cabecera: </h1>private String rellenarEspacios(String atributo, int longitudmax)<br/>
+     * <h1>Descripción :</h1> Método para rellenar el valor de un atributo de la clase con espacios para permitir la funcionalidad del programa
+     *
+     * @param atributo
+     * @param longitudmax
+     * @return String
+     */
     private String rellenarEspacios(String atributo, int longitudmax){
         StringBuilder strb = new StringBuilder("%-");
         strb.append(longitudmax).append("s");

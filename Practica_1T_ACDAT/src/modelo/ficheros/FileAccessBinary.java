@@ -1,14 +1,9 @@
 package modelo.ficheros;
 
 import modelo.clasesBasicas.Cliente;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
-public class FileAccessObject {
+public class FileAccessBinary {
 
     //Constantes
     public static final String FICHERO_CLIENTES = "clientes.bin";
@@ -26,36 +21,36 @@ public class FileAccessObject {
      * <h1>Cabecera: </h1>public static void escribirCliente(Cliente cliente)<br/>
      * <h1>Descripción: </h1> Método para escribir en el fichero el cliente dado <br/>
      * <h1>Precondiciones: </h1>Fichero creado y cliente diferente de null <br/>
-     * <h1>Postocondiciones: </h1>Cliente introducido en el fichero <br/>
+     * <h1>Postocondiciones: </h1>Cliente introducido en el fichero clientes y en el de índice <br/>
      * <br/>
-     * <h1>Entradas: </h1>List<Cliente>Cliente cliente <br/>
+     * <h1>Entradas: </h1>Cliente cliente <br/>
      * <h1>Salidas: </h1>Ninguna
+     * <br/>
      *
      * @param cliente
      */
     public static void escribirCliente(Cliente cliente){
        try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(ficheroClientes, true))){
            dos.write(cliente.toString().getBytes());
-       } catch (FileNotFoundException e) {
-           e.printStackTrace();
        } catch (IOException e) {
            e.printStackTrace();
        }
-       escribirFicheroIndice(cliente.getDni(), getLongitudFichero());
+        escribirFicheroIndice(cliente.getDni(), getLongitudFichero());
     }
 
     /**
-     * <h1>Cabecera: </h1>public static List<String> leerClientes()<br/>
+     * <h1>Cabecera: </h1>public static void leerClientesFicheroIndiceEnAuxiliar()<br/>
      * <h1>Descripción: </h1> Método para guardar el contenido del fichero en una lista <br/>
      * <h1>Precondiciones: </h1>Fichero creado<br/>
      * <h1>Postocondiciones: </h1>Contenido insertado en la lista<br/>
      * <br/>
      * <h1>Entradas: </h1>Ninguna<br/>
      * <h1>Salidas: </h1>Ninguna
-     *
+     * <br/>
      */
-    public static void leerClientesFicheroIndice(){
+    public static void leerClientesFicheroIndiceEnAuxiliar(){
         String linea;
+
         inicializarFichero(FICHERO_AUX);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FICHERO_INDICE)))) {
                 do {
@@ -69,15 +64,25 @@ public class FileAccessObject {
             }
     }
 
+    /**
+     * <h1>Cabecera: </h1>public static void exportarFicheroCliente()<br/>
+     * <h1>Descripción: </h1> Método para escribir el contenido del fichero cliente en el fichero para exportar <br/>
+     * <h1>Precondiciones: </h1>Ninguna<br/>
+     * <h1>Postocondiciones: </h1>Contenido insertado en el fichero exportado<br/>
+     * <br/>
+     * <h1>Entradas: </h1>Ninguna<br/>
+     * <h1>Salidas: </h1>Ninguna
+     * <br/>
+     */
     public static void exportarFicheroCliente(){
         String linea;
-        FileAccessText.inicializarFicheroExiste();
 
+        FileAccessText.inicializarFicheroExportado();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FICHERO_INDICE)))) {
             do {
                 linea = br.readLine();
                 if (linea != null && comprobarPosicion(linea)) {
-                   FileAccessText.escribirClientesFichero(buscarClientePorPosicion(Integer.parseInt(linea.substring(0,1))));
+                   FileAccessText.escribirClientesFicheroExportado(buscarClientePorPosicion(Integer.parseInt(linea.substring(0,1))));
                 }
             } while (linea != null);
         } catch (IOException e) {
@@ -86,37 +91,31 @@ public class FileAccessObject {
     }
 
     /**
-     * <h1>Cabecera: </h1>private static String leerFicheroText(File fichero)<br/>
-     * <h1>Descripción: </h1> Método para leer el fichero de texto <br/>
-     * <h1>Precondiciones: </h1>Fichero creado<br/>
-     * <h1>Postocondiciones: </h1>Formato leido<br/>
+     * <h1>Cabecera: </h1>private static void escribirFichero(String cliente, String nombreFichero)<br/>
+     * <h1>Descripción: </h1> Método para escribir la cadena dada en el fichero dado <br/>
      * <br/>
-     * <h1>Entradas: </h1>File fichero<br/>
-     * <h1>Salidas: </h1>String formato
-     *
-     * @return formato
+     * @param cliente
+     * @param nombreFichero
      */
     private static void escribirFichero(String cliente, String nombreFichero){
-
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(nombreFichero, true))){
             bw.write(cliente);
             bw.newLine();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * <h1>Cabecera: </h1>public static List<String> leerClientes()<br/>
-     * <h1>Descripción: </h1> Método para guardar el contenido del fichero en una lista <br/>
-     * <h1>Precondiciones: </h1>Fichero creado<br/>
-     * <h1>Postocondiciones: </h1>Contenido insertado en la lista<br/>
+     * <h1>Cabecera: </h1>public static void leerClientesFicheroAux(String dni)<br/>
+     * <h1>Descripción: </h1> Método para leer el contenido del fichero auxciliar y escribirlo en el de índice <br/>
+     * <h1>Precondiciones: </h1>dni diferente de null<br/>
+     * <h1>Postocondiciones: </h1>Contenido del fichero auxiliar introducido en el de índice<br/>
      * <br/>
-     * <h1>Entradas: </h1>Ninguna<br/>
-     * <h1>Salidas: </h1>Ninguna
-     *
+     * <h1>Entradas: </h1>String dni<br/>
+     * <h1>Salidas: </h1>Ninguna<br/>
+     * <br/>
+     * @param dni
      */
     public static void leerClientesFicheroAux(String dni){
         String linea;
@@ -134,6 +133,12 @@ public class FileAccessObject {
         }
     }
 
+    /**
+     * <h1>Cabecera: </h1>private static void escribirFichero(String cliente, String nombreFichero)<br/>
+     * <h1>Descripción: </h1> Método para escribir la cadena dada en el fichero dado <br/>
+     * <br/>
+     * @param nombreFichero
+     */
     private static void inicializarFichero(String nombreFichero){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(nombreFichero, false))){
             bw.write("");

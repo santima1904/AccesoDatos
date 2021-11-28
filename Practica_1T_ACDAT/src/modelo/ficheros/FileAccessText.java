@@ -1,7 +1,6 @@
 package modelo.ficheros;
 
 import java.io.*;
-import java.util.List;
 
 public class FileAccessText{
 
@@ -15,11 +14,16 @@ public class FileAccessText{
 
 
     /**
-     * <h1>Cabecera: </h1> public static void inicializarFichero()<br/>
-     * <h1>Descripción :</h1> Método para inicializar un fichero
+     * <h1>Cabecera: </h1>public static void inicializarFichero()<br/>
+     * <h1>Descripción: </h1> Método para inicializar el fichero de configuración <br/>
+     * <h1>Precondiciones: </h1>Ninguna<br/>
+     * <h1>Postocondiciones: </h1>Fichero creado y formato inicial introducida<br/>
+     * <br/>
+     * <h1>Entradas: </h1>Ninguna<br/>
+     * <h1>Salidas: </h1>Ninguna <br/>
+     * <br/>
      */
-    public static void inicializarFichero() {
-
+    public static void inicializarFichero(){
         try {
             ficheroConfiguracion.createNewFile();
             escribirCodificacionFichero("UTF-8");
@@ -30,13 +34,13 @@ public class FileAccessText{
 
     /**
      * <h1>Cabecera: </h1>public static void escribirCodificacionFichero(String codificacion)<br/>
-     * <h1>Descripción: </h1> Método para escribir en el fichero dado la cadena introducida <br/>
+     * <h1>Descripción: </h1> Método para escribir en el fichero de configuración la codificación introducida <br/>
      * <h1>Precondiciones: </h1>Fichero creado y cadena diferente de null <br/>
      * <h1>Postocondiciones: </h1>Cadena introducida en el fichero <br/>
      * <br/>
      * <h1>Entradas: </h1>String codificacion<br/>
-     * <h1>Salidas: </h1>Ninguna
-     *
+     * <h1>Salidas: </h1>Ninguna <br/>
+     * <br/>
      * @param codificacion
      */
     public static void escribirCodificacionFichero(String codificacion) {
@@ -48,18 +52,18 @@ public class FileAccessText{
     }
 
     /**
-     * <h1>Cabecera: </h1> public static void escribirClientesFichero(List<String> lista) <br/>
-     * <h1>Descripción: </h1> Método para escribir en el fichero dado la lista de clientes <br/>
-     * <h1>Precondiciones: </h1>Fichero creado y lista diferente de null <br/>
-     * <h1>Postocondiciones: </h1>Lista introducida en el fichero <br/>
+     * <h1>Cabecera: </h1> public static void escribirClientesFichero(String cliente) <br/>
+     * <h1>Descripción: </h1> Método para escribir en el fichero el cliente dado <br/>
+     * <h1>Precondiciones: </h1>Fichero creado y cliente diferente de null <br/>
+     * <h1>Postocondiciones: </h1> Cliente introducido en el fichero <br/>
      * <br/>
-     * <h1>Entradas: </h1>List(Cliente) lista<br/>
+     * <h1>Entradas: </h1>String cliente<br/>
      * <h1>Salidas: </h1>Ninguna
      *
      * @param cliente
      */
-    public static void escribirClientesFichero(String cliente) {
-        try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(ficheroText, true)), leerFicheroText(ficheroConfiguracion))) {
+    public static void escribirClientesFicheroExportado(String cliente) {
+        try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(ficheroText, true)), leerFicheroText())) {
                 osw.write(cliente);
                 osw.write("\n");
         } catch (IOException e) {
@@ -68,10 +72,11 @@ public class FileAccessText{
     }
 
     /**
-     * Metodo para ver si existe el fichero y sobrescribirlo o no
-     * @return
+     * <h1>Cabecera: </h1>public static void inicializarFicheroExportado()<br/>
+     * <h1>Descripción: </h1> Metodo para ver si existe el fichero y sobrescribirlo o no <br/>
+     *
      */
-    public static void inicializarFicheroExiste(){
+    public static void inicializarFicheroExportado(){
         try(OutputStreamWriter osw = new OutputStreamWriter((new FileOutputStream(ficheroText, false)))) {
             osw.write("");
         } catch (IOException e) {
@@ -81,23 +86,19 @@ public class FileAccessText{
 
     /**
      * <h1>Cabecera: </h1>private static String leerFicheroText(File fichero)<br/>
-     * <h1>Descripción: </h1> Método para leer el fichero de texto dado <br/>
+     * <h1>Descripción: </h1> Método para leer el fichero de configuración <br/>
      *
-     * @param fichero
      */
-    private static String leerFicheroText(File fichero){
-        String formato = null;
+    private static String leerFicheroText(){
+        String linea = null;
 
-        try(BufferedReader br = new BufferedReader(new FileReader(fichero))){
-            formato = br.readLine();
+        try(BufferedReader br = new BufferedReader(new FileReader(ficheroConfiguracion))){
+            linea = br.readLine();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return formato;
+        return linea;
     }
-
-
-
 }

@@ -1,8 +1,6 @@
 package vista2;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Validacion {
 
@@ -13,6 +11,8 @@ public class Validacion {
     public static final String INSERTAR_TLFN = "Inserte el número de teléfono: ";
     public static final String INSERTAR_DIRECCION = "Inserte la dirección: ";
     public static final String FORMATO = "Inserte el formato: ";
+    public static final int LONGITUDMAX_NOMBRE_APELLIDOS = 25;
+    public static final int LONGITUDMAX_DIRECCION = 30;
 
     //Propiedades estáticas
     private static Scanner teclado = new Scanner(System.in);
@@ -21,7 +21,9 @@ public class Validacion {
     //Métodos
     /**
      * <h1>Cabecera: </h1>public static String pedirNombre()<br/>
-     * <h1>Descripción: </h1> Método para pedir el nombre por teclado <br/>
+     * <h1>Descripción: </h1> Método para pedir y validar el nombre por teclado
+     *                       El nombre debe tener una longitud menor que 25<br/>
+     * <br/>
      */
     public static String pedirNombre(){
         String nombre;
@@ -30,14 +32,16 @@ public class Validacion {
             System.out.println(INSERTAR_NOMBRE);
             nombre = teclado.nextLine();
         }
-        while(nombre.length()>25);
+        while(nombre.length()>LONGITUDMAX_NOMBRE_APELLIDOS);
 
         return nombre;
     }
 
     /**
      * <h1>Cabecera: </h1>public static String pedirApellidos()<br/>
-     * <h1>Descripción: </h1> Método para pedir los apellidos por teclado <br/>
+     * <h1>Descripción: </h1> Método para pedir y validar los apellidos por teclado
+     *                        El nombre debe tener una longitud menor que 25<br/>
+     * <br/>
      */
     public static String pedirApellidos(){
         String apellidos;
@@ -46,14 +50,16 @@ public class Validacion {
             System.out.println(INSERTAR_APELLIDOS);
             apellidos = teclado.nextLine();
         }
-        while(apellidos.length()>25);
+        while(apellidos.length()>LONGITUDMAX_NOMBRE_APELLIDOS);
 
         return apellidos;
     }
 
     /**
      * <h1>Cabecera: </h1>public static String pedirDni()<br/>
-     * <h1>Descripción: </h1> Método para pedir el dni por teclado <br/>
+     * <h1>Descripción: </h1> Método para pedir y validar el dni por teclado <br/>
+     *                  El dni debe ser real(longitud 9)<br/>
+     * <br/>
      */
     public static String pedirDni(){
         String dni = " ";
@@ -73,20 +79,22 @@ public class Validacion {
     }
 
     /**
-     * <h1>Cabecera: </h1>public static String pedirDni()<br/>
-     * <h1>Descripción: </h1> Método para pedir el dni por teclado <br/>
+     * <h1>Cabecera: </h1>private static char calcularLetra(String dni)<br/>
+     * <h1>Descripción: </h1> Método para calcular la letra correspondiente a la parte numérica del dni dado<br/>
+     * <br/>
      */
     private static char calcularLetra(String dni){
         char[] caracteres = {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
         int modulo= Integer.parseInt(dni)%23;
-        char letra = caracteres[modulo];
 
-        return letra;
+        return caracteres[modulo];
     }
 
     /**
      * <h1>Cabecera: </h1>public static String pedirTlfn()<br/>
-     * <h1>Descripción: </h1> Método para pedir el número de teléfono por teclado <br/>
+     * <h1>Descripción: </h1> Método para pedir y validar el número de teléfono por teclado <br/>
+     *                        El teléfono debe tener una longitud de 9<br/>
+     * <br/>
      */
     public static String pedirTlfn(){
         String tlfn;
@@ -102,7 +110,9 @@ public class Validacion {
 
     /**
      * <h1>Cabecera: </h1>public static String pedirDireccion()<br/>
-     * <h1>Descripción: </h1> Método para pedir la dirección por teclado <br/>
+     * <h1>Descripción: </h1> Método para pedir y validar la dirección por teclado
+     *                        La dirección debe tener una longitud menor que 30<br/>
+     * <br/>
      */
     public static String pedirDireccion(){
         String direccion;
@@ -111,7 +121,7 @@ public class Validacion {
             System.out.println(INSERTAR_DIRECCION);
             direccion = teclado.nextLine();
         }
-        while(direccion.length()>30);
+        while(direccion.length()>LONGITUDMAX_DIRECCION);
 
         return direccion;
     }
@@ -136,7 +146,8 @@ public class Validacion {
 
     /**
      * <h1>Cabecera: </h1>public static int pedirOpcion()<br/>
-     * <h1>Descripción: </h1> Método para pedir la opción del menú por teclado <br/>
+     * <h1>Descripción: </h1> Método para pedir y validar la opción del menú por teclado, debe ser un número entre 0 y 5 <br/>
+     * <br/>
      */
     public static int pedirOpcion(){
         int opcion;
@@ -150,18 +161,17 @@ public class Validacion {
     }
 
     /**
-     * <h1>Cabecera: </h1>public static int pedirOpcion()<br/>
-     * <h1>Descripción: </h1> Método para pedir la opción del menú por teclado <br/>
+     * <h1>Cabecera: </h1> public static boolean pedirSalir()<br/>
+     * <h1>Descripción: </h1> Método para pedir y validar la opción del menú por teclado, debe ser 1 o 2 <br/>
      */
     public static boolean pedirSalir(){
         boolean salir = false;
-        int numeroSalir = 0;
+        int numeroSalir;
 
         do{
             numeroSalir = tecladoInt.nextInt();
         }
         while(numeroSalir != 1 && numeroSalir != 2);
-
         if (numeroSalir == 1){
             salir = true;
         }
@@ -170,7 +180,7 @@ public class Validacion {
 
     /**
      * <h1>Cabecera: </h1>public static String pedirFormato()<br/>
-     * <h1>Descripción: </h1> Método para pedir el formato por teclado <br/>
+     * <h1>Descripción: </h1> Método para pedir y validar el formato por teclado <br/>
      */
     public static String pedirFormato(){
         String formato = " ";
