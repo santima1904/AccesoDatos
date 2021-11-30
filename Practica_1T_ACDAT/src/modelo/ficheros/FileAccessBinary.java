@@ -12,9 +12,9 @@ public class FileAccessBinary {
     public static final int LONGITUD_MAXIMA = 110;//Longitud máxma del cliente
 
     //Propiedades estáticas
-    private static File ficheroClientes = new File(FICHERO_CLIENTES);
-    private static File ficheroIndice = new File(FICHERO_INDICE);
-    private static File ficheroAux = new File(FICHERO_AUX);
+    public static File ficheroClientes = new File(FICHERO_CLIENTES);
+    public static File ficheroIndice = new File(FICHERO_INDICE);
+    public static File ficheroAux = new File(FICHERO_AUX);
 
 
     /**
@@ -40,9 +40,9 @@ public class FileAccessBinary {
 
     /**
      * <h1>Cabecera: </h1>public static void leerClientesFicheroIndiceEnAuxiliar()<br/>
-     * <h1>Descripción: </h1> Método para guardar el contenido del fichero en una lista <br/>
+     * <h1>Descripción: </h1> Método para guardar el contenido del fichero en un fichero auxiliar<br/>
      * <h1>Precondiciones: </h1>Fichero creado<br/>
-     * <h1>Postocondiciones: </h1>Contenido insertado en la lista<br/>
+     * <h1>Postocondiciones: </h1>Contenido insertado en el fichero<br/>
      * <br/>
      * <h1>Entradas: </h1>Ninguna<br/>
      * <h1>Salidas: </h1>Ninguna
@@ -134,8 +134,8 @@ public class FileAccessBinary {
     }
 
     /**
-     * <h1>Cabecera: </h1>private static void escribirFichero(String cliente, String nombreFichero)<br/>
-     * <h1>Descripción: </h1> Método para escribir la cadena dada en el fichero dado <br/>
+     * <h1>Cabecera: </h1>private static void inicializarFichero(String nombreFichero)<br/>
+     * <h1>Descripción: </h1> Método para inicializar el fichero dado <br/>
      * <br/>
      * @param nombreFichero
      */
@@ -150,6 +150,14 @@ public class FileAccessBinary {
     }
 
 
+    /**
+     * <h1>Cabecera: </h1>private static boolean comprobarPosicion(String linea)<br/>
+     * <h1>Descripción: </h1> Método para comprobarla posicion de la linea dada <br/>
+     *                        Si la posición es -1, devuelve un false <br/>
+     * <br/>
+     * @param linea
+     * @return boolean
+     */
     private static boolean comprobarPosicion(String linea){
         boolean valido = true;
 
@@ -161,7 +169,7 @@ public class FileAccessBinary {
     }
 
         /**
-     * <h1>Cabecera: </h1>public static int buscarPosicion(String dni)<br/>
+     * <h1>Cabecera: </h1>private static int getLongitudFichero()<br/>
      * <h1>Descripción: </h1> Método para buscar la posición del cliente con el dni dado <br/>
      * <h1>Precondiciones: </h1>Fichero creado y dni diferente de null <br/>
      * <h1>Postocondiciones: </h1>Posicion encontrada<br/>
@@ -175,16 +183,13 @@ public class FileAccessBinary {
         String linea;
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ficheroClientes)))) {
-            try{
                 linea = br.readLine();
                 while (linea.substring(LONGITUD_MAXIMA*numCliente) != null&&!salir) {
                     contador++;
                     numCliente++;
                 }
-            }catch (StringIndexOutOfBoundsException e){
+        }catch (StringIndexOutOfBoundsException e){
                 salir = true;
-            }
-
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }

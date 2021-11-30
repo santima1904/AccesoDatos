@@ -12,7 +12,7 @@ public class Main {
 
         boolean salir = false;
         String dniBorrado;
-        FileAccessText.inicializarFichero();
+        FileAccessText.escribirCodificacionFichero("UTF-8");
 
         while(!salir){
             Menu.menu();
@@ -29,7 +29,7 @@ public class Main {
 
                 case 3:
                     dniBorrado = Validacion.pedirDni();
-                    FileAccessBinary.leerClientesFicheroIndice();
+                    FileAccessBinary.leerClientesFicheroIndiceEnAuxiliar();
                     FileAccessBinary.leerClientesFicheroAux(dniBorrado);
                     Menu.mostrarMensajeComprobacionPersonaBorrada(comprobarPersonaBorrada( FileAccessBinary.buscarPosicionFicheroIndice(dniBorrado)));
                     break;
@@ -51,6 +51,13 @@ public class Main {
     }
 
 
+    /**
+     * <h1>Cabecera: </h1>private static String comprobarPersonaBorrada(int posicion)<br/>
+     * <h1>Descripción: </h1> Método para comprobar si se ha realizado con éxito la función de borrar un cliente del fichero<br/>
+     * <br/>
+     * @param posicion
+     * @return mensaje
+     */
     private static String comprobarPersonaBorrada(int posicion){
         String mensaje = "Se ha borrado correctamente";
         if (posicion != -1){

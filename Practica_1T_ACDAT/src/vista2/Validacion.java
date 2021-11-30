@@ -13,6 +13,7 @@ public class Validacion {
     public static final String FORMATO = "Inserte el formato: ";
     public static final int LONGITUDMAX_NOMBRE_APELLIDOS = 25;
     public static final int LONGITUDMAX_DIRECCION = 30;
+    public static final int LONGITUDMAX_TELEFONO = 9;
 
     //Propiedades estáticas
     private static Scanner teclado = new Scanner(System.in);
@@ -103,7 +104,7 @@ public class Validacion {
             System.out.println(INSERTAR_TLFN);
             tlfn = teclado.nextLine();
         }
-        while(tlfn.length()!=9&&validarTlfn(tlfn));
+        while(tlfn.length()!=LONGITUDMAX_TELEFONO||!validarTlfn(tlfn));
 
         return tlfn;
     }

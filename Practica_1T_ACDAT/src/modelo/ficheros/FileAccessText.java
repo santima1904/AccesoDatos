@@ -9,28 +9,9 @@ public class FileAccessText{
     public static final String FICHERO_TEXT = "listado_clientes.bin";
 
     //Propiedades estáticas
-    private static File ficheroConfiguracion = new File(FICHERO_PRINCIPAL);
-    private static File ficheroText = new File(FICHERO_TEXT);
+    public static File ficheroConfiguracion = new File(FICHERO_PRINCIPAL);
+    public static File ficheroText = new File(FICHERO_TEXT);
 
-
-    /**
-     * <h1>Cabecera: </h1>public static void inicializarFichero()<br/>
-     * <h1>Descripción: </h1> Método para inicializar el fichero de configuración <br/>
-     * <h1>Precondiciones: </h1>Ninguna<br/>
-     * <h1>Postocondiciones: </h1>Fichero creado y formato inicial introducida<br/>
-     * <br/>
-     * <h1>Entradas: </h1>Ninguna<br/>
-     * <h1>Salidas: </h1>Ninguna <br/>
-     * <br/>
-     */
-    public static void inicializarFichero(){
-        try {
-            ficheroConfiguracion.createNewFile();
-            escribirCodificacionFichero("UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * <h1>Cabecera: </h1>public static void escribirCodificacionFichero(String codificacion)<br/>
