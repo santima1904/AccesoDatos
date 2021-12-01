@@ -26,20 +26,20 @@ public class FileAccessBinaryRead {
      * <h1>Salidas: </h1>Ninguna
      * <br/>
      */
-    public static void leerClientesFicheroIndiceEnAuxiliar(){
+    public static void leerClientesFicheroIndiceEnAuxiliar() {
         String linea;
 
         FileAccessBinaryWrite.inicializarFichero(FICHERO_AUX);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FICHERO_INDICE)))) {
-                do {
-                    linea = br.readLine();
-                    if (linea != null) {
-                       FileAccessBinaryWrite.escribirFichero(linea, FICHERO_AUX);
-                    }
-                } while (linea != null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            do {
+                linea = br.readLine();
+                if (linea != null) {
+                    FileAccessBinaryWrite.escribirFichero(linea, FICHERO_AUX);
+                }
+            } while (linea != null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -52,7 +52,7 @@ public class FileAccessBinaryRead {
      * <h1>Salidas: </h1>Ninguna
      * <br/>
      */
-    public static void exportarFicheroCliente(){
+    public static void exportarFicheroCliente() {
         String linea;
 
         FileAccessText.inicializarFicheroExportado();
@@ -60,14 +60,13 @@ public class FileAccessBinaryRead {
             do {
                 linea = br.readLine();
                 if (linea != null && comprobarPosicion(linea)) {
-                   FileAccessText.escribirClientesFicheroExportado(buscarClientePorPosicion(Integer.parseInt(linea.substring(0,1))));
+                    FileAccessText.escribirClientesFicheroExportado(buscarClientePorPosicion(Integer.parseInt(linea.substring(0, 1))));
                 }
             } while (linea != null);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
 
     /**
@@ -79,9 +78,10 @@ public class FileAccessBinaryRead {
      * <h1>Entradas: </h1>String dni<br/>
      * <h1>Salidas: </h1>Ninguna<br/>
      * <br/>
+     *
      * @param dni
      */
-    public static void leerClientesFicheroAux(String dni){
+    public static void leerClientesFicheroAux(String dni) {
         String linea;
         FileAccessBinaryWrite.inicializarFichero(FICHERO_INDICE);
 
@@ -98,17 +98,16 @@ public class FileAccessBinaryRead {
     }
 
 
-
-
     /**
      * <h1>Cabecera: </h1>private static boolean comprobarPosicion(String linea)<br/>
      * <h1>Descripción: </h1> Método para comprobarla posicion de la linea dada <br/>
-     *                        Si la posición es -1, devuelve un false <br/>
+     * Si la posición es -1, devuelve un false <br/>
      * <br/>
+     *
      * @param linea
      * @return boolean
      */
-    private static boolean comprobarPosicion(String linea){
+    private static boolean comprobarPosicion(String linea) {
         boolean valido = true;
 
         if (linea.startsWith("-1")) {
@@ -131,18 +130,23 @@ public class FileAccessBinaryRead {
      * @return int
      */
     public static int getLongitudFichero() {
-        int longitud = -1;
+        int contador = -1, numCliente = 1;
+        boolean salir = false;
         String linea;
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ficheroClientes)))) {
             linea = br.readLine();
-            longitud = linea.length() / LONGITUD_MAXIMA;
-        }catch (IOException ioException) {
+            while (linea.substring(LONGITUD_MAXIMA*numCliente) != null&&!salir) {
+                contador++;
+                numCliente++;
+            }
+        }catch (StringIndexOutOfBoundsException e){
+            salir = true;
+        } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        return longitud;
+        return contador;
     }
-
 
 
     /**
@@ -155,13 +159,13 @@ public class FileAccessBinaryRead {
      * @param dni
      * @param linea
      */
-    private static String encontrarDniBorrado(String dni, String linea){
-       String [] atributoscliente;
+    private static String encontrarDniBorrado(String dni, String linea) {
+        String[] atributoscliente;
 
-            atributoscliente = linea.split(",");
-            if (comprobarDni(atributoscliente[1], dni)){
-                linea = "-1"+","+dni;
-            }
+        atributoscliente = linea.split(",");
+        if (comprobarDni(atributoscliente[1], dni)) {
+            linea = "-1" + "," + dni;
+        }
         return linea;
     }
 
@@ -180,20 +184,20 @@ public class FileAccessBinaryRead {
         int posicion = -1;
         boolean valido = false, salir = false;
         String linea;
-        String [] atributoscliente;
+        String[] atributoscliente;
 
         try (BufferedReader br = new BufferedReader(new FileReader(ficheroIndice))) {
-            try{
-                while (!valido||!salir){
+            try {
+                while (!valido || !salir) {
                     linea = br.readLine();
                     atributoscliente = linea.split(",");
                     valido = comprobarDni(atributoscliente[1], dni);
-                    if (valido){
+                    if (valido) {
                         posicion = Integer.parseInt(atributoscliente[0]);
                         salir = true;
                     }
                 }
-            }catch (EOFException e){
+            } catch (EOFException e) {
                 salir = true;
             }
         } catch (IOException ioException) {
@@ -214,58 +218,65 @@ public class FileAccessBinaryRead {
      *
      * @param posicion
      * @return String
-     * */
-    public static String buscarClientePorPosicion(int posicion){
-        String cadena;
+     */
+    public static String buscarClientePorPosicion(int posicion) {
+        String cadena = " ", cliente = " ";
 
-        if (posicion == -1){
+        if (posicion == -1) {
             cadena = "No encontrado";
-        }else {
-            cadena = leerClientePorPosicion(posicion);
+        } else {
+            try (RandomAccessFile raf = new RandomAccessFile(ficheroClientes, "rws")) {
+                raf.seek((long) posicion * LONGITUD_MAXIMA);
+                cliente = raf.readLine();
+                cadena = cliente.substring(0, LONGITUD_MAXIMA);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
+        }
         return cadena;
     }
 
-    /**
-     * <h1>Cabecera: </h1>private static String leerClientePorPosicion(int posicion)<br/>
-     * <h1>Descripción: </h1> Método para leer el cliente del fichero cliente con la posición dada <br/>
-     * <br/>
-     * <h1>Entradas: </h1>int posicion<br/>
-     * <h1>Salidas: </h1>String cliente
-     * <br/>
-     * @param posicion
-     */
-    private static String leerClientePorPosicion(int posicion) {
-        String cliente = null;
+        /**
+         * <h1>Cabecera: </h1>private static String leerClientePorPosicion(int posicion)<br/>
+         * <h1>Descripción: </h1> Método para leer el cliente del fichero cliente con la posición dada <br/>
+         * <br/>
+         * <h1>Entradas: </h1>int posicion<br/>
+         * <h1>Salidas: </h1>String cliente
+         * <br/>
+         * @param posicion
+         */
+        private static String leerClientePorPosicion ( int posicion){
+            String cliente = " ";
 
-        try (RandomAccessFile raf = new RandomAccessFile(ficheroClientes, "rws")) {
-            raf.seek((long) posicion * LONGITUD_MAXIMA);
-            cliente = raf.readLine();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            try (RandomAccessFile raf = new RandomAccessFile(ficheroClientes, "rws")) {
+                raf.seek((long) posicion * LONGITUD_MAXIMA);
+                cliente = raf.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return cliente.substring(0, LONGITUD_MAXIMA);
         }
-        return cliente.substring(0,LONGITUD_MAXIMA);
-    }
 
-    /**
-     * <h1>Cabecera: </h1>private static boolean comprobarDni(String dniCliente, String dni)<br/>
-     * <h1>Descripción: </h1> Método para comprobar que el dni dado y el del cliente coinciden<br/>
-     * <br/>
-     * <h1>Entradas: </h1>String dniCliente, String dni<br/>
-     * <h1>Salidas: </h1>boolean
-     *
-     * @param dni
-     * @param dniCliente
-     */
-    private static boolean comprobarDni(String dniCliente, String dni) {
-        boolean igual = false;
+        /**
+         * <h1>Cabecera: </h1>private static boolean comprobarDni(String dniCliente, String dni)<br/>
+         * <h1>Descripción: </h1> Método para comprobar que el dni dado y el del cliente coinciden<br/>
+         * <br/>
+         * <h1>Entradas: </h1>String dniCliente, String dni<br/>
+         * <h1>Salidas: </h1>boolean
+         *
+         * @param dni
+         * @param dniCliente
+         */
+        private static boolean comprobarDni (String dniCliente, String dni){
+            boolean igual = false;
 
-        if (dniCliente.equals(dni)) {
-            igual = true;
+            if (dniCliente.equals(dni)) {
+                igual = true;
+            }
+            return igual;
         }
-        return igual;
     }
-}

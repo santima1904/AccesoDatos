@@ -1,5 +1,6 @@
 package test;
 
+import modelo.clasesBasicas.Cliente;
 import modelo.ficheros.FileAccessBinaryRead;
 import org.junit.jupiter.api.*;
 
@@ -13,8 +14,7 @@ class FileAccessBinaryReadTest {
     static final String FICHERO_INDICE = "indice_clientes.bin";
     static final String FICHERO_AUX = "fichero_aux.bin";
     static final String FICHERO_EXPORTADO = "listado_clientes.bin";
-    static final String PRUEBA_INDICE = "1,prueba";
-
+    static final String PRUEBA_INDICE = "1,77866084K";
 
     static File ficheroClientes;
     static File ficheroIndice;
@@ -37,39 +37,89 @@ class FileAccessBinaryReadTest {
         inicializarFichero(ficheroAux);
     }
 
-    @AfterEach
-    void tearDown() {
+    @AfterAll
+    static void afterAll() {
+        ficheroAux.delete();
+        ficheroExportado.delete();
+        ficheroClientes.delete();
+        ficheroIndice.delete();
     }
 
+    /**
+     * Test de caja negra para probar la funcion del metodo testleerClientesFicheroIndiceEnAuxiliar()
+     */
     @Test
-    void leerClientesFicheroIndiceEnAuxiliar() {
+    void testleerClientesFicheroIndiceEnAuxiliar() {
         escribirFichero(PRUEBA_INDICE, ficheroIndice);
         FileAccessBinaryRead.leerClientesFicheroIndiceEnAuxiliar();
         assertEquals(PRUEBA_INDICE, leerFichero(ficheroAux));
     }
 
+    /**
+     * Test de caja blanca para no entrar en el if del metodo
+     */
     @Test
-    void exportarFicheroCliente() {
+    void testleerClientesFicheroIndiceEnAuxiliarContenidoNulo() {
+        FileAccessBinaryRead.leerClientesFicheroIndiceEnAuxiliar();
+        assertEquals(null, leerFichero(ficheroAux));
+    }
+
+    /**
+     * Test de caja negra para probar la funcion del metodo testleerClientesFicheroAux()
+     */
+    @Test
+     void testleerClientesFicheroAux() {
+        escribirFichero(PRUEBA_INDICE, ficheroAux);
+        FileAccessBinaryRead.leerClientesFicheroAux(PRUEBA_INDICE);
+        assertEquals(PRUEBA_INDICE, leerFichero(ficheroIndice));
+    }
+
+    /**
+     * Test de caja blanca para no entrar en el if
+     */
+    @Test
+    void testleerClientesFicheroAuxContenidoNulo() {
+        FileAccessBinaryRead.leerClientesFicheroAux(PRUEBA_INDICE);
+        assertEquals(null, leerFichero(ficheroIndice));
+    }
+
+    /**
+     * Test de caja negra para probar la función del método testgetLongitudFichero()
+     */
+    @Test
+    void testgetLongitudFichero() {
+        escribirFichero( new Cliente("nombre", "apellidos", "dni", "numTelefono", "direccion").toString(), ficheroClientes);
+        assertEquals(0,FileAccessBinaryRead.getLongitudFichero());
+    }
+
+
+    /**
+     * Test de caja negra para probar la función del método testbuscarPosicionFicheroIndice()
+     */
+    @Test
+    void testbuscarPosicionFicheroIndice() {
         escribirFichero(PRUEBA_INDICE, ficheroIndice);
-        FileAccessBinaryRead.exportarFicheroCliente();
-        assertEquals(PRUEBA_INDICE,leerFichero(ficheroExportado));
+        assertEquals(1, FileAccessBinaryRead.buscarPosicionFicheroIndice("77866084K"));
     }
 
+    /**
+     * Test de caja negra para probar la función del método testbuscarClientePorPosicion()
+     */
     @Test
-    void leerClientesFicheroAux() {
+    void testbuscarClientePorPosicion() {
+        escribirFichero( new Cliente("nombre", "apellidos", "dni", "numTelefono", "direccion").toString(), ficheroClientes);
+        assertEquals("nombre                    , apellidos                 , dni       , numTelefono , direccion                   ", FileAccessBinaryRead.buscarClientePorPosicion(FileAccessBinaryRead.getLongitudFichero()));
     }
 
+    /**
+     * Test de caja blanca para que se cumple la condicion if del metodo
+     */
     @Test
-    void getLongitudFichero() {
+    void testbuscarClientePorPosicionPosicionMenosUno() {
+        escribirFichero( new Cliente("nombre", "apellidos", "dni", "numTelefono", "direccion").toString(), ficheroClientes);
+        assertEquals("No encontrado", FileAccessBinaryRead.buscarClientePorPosicion(-1));
     }
 
-    @Test
-    void buscarPosicionFicheroIndice() {
-    }
-
-    @Test
-    void buscarClientePorPosicion() {
-    }
 
     //Métodos privados para los tests
     /**

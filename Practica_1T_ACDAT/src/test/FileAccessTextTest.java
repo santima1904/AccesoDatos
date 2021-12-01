@@ -25,29 +25,35 @@ class FileAccessTextTest {
        inicializarFichero(ficheroListadoClientes);
     }
 
+    @AfterAll
+    static void afterAll() {
+        ficheroConfiguracion.delete();
+        ficheroListadoClientes.delete();
+    }
+
     /**
-     * Test de caja negra para probar la función del método escribirCodificacionFichero()
+     * Test de caja negra para probar la función del método testescribirCodificacionFichero()
      */
     @Test
-    void escribirCodificacionFichero() {
+    void testescribirCodificacionFichero() {
         FileAccessText.escribirCodificacionFichero("UTF-8");
         assertEquals("UTF-8", leerFichero(ficheroConfiguracion));
     }
 
     /**
-     * Test de caja negra para probar la función del método escribirClientesFicheroExportado()
+     * Test de caja negra para probar la función del método testescribirClientesFicheroExportado()
      */
     @Test
-    void escribirClientesFicheroExportado() {
+    void testescribirClientesFicheroExportado() {
         FileAccessText.escribirClientesFicheroExportado("cliente");
         assertEquals("cliente", leerFichero(ficheroListadoClientes));
     }
 
     /**
-     * Test de caja negra para probar la función del método inicializarFicheroExportado()
+     * Test de caja negra para probar la función del método testinicializarFicheroExportado()
      */
     @Test
-    void inicializarFicheroExportado() {
+    void testinicializarFicheroExportado() {
         FileAccessText.inicializarFicheroExportado();
         assertEquals(null, leerFichero(ficheroListadoClientes));
     }
