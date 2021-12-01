@@ -1,14 +1,14 @@
 package controlador;
 
 import modelo.clasesBasicas.Cliente;
-import modelo.ficheros.FileAccessBinary;
+import modelo.ficheros.FileAccessBinaryRead;
+import modelo.ficheros.FileAccessBinaryWrite;
 import modelo.ficheros.FileAccessText;
 import vista2.Menu;
 import vista2.Validacion;
 
 public class Main {
     public static void main(String[] args) {
-        //TODO Hacer todos los sumaries, revisar los hechos que hay que cambiarlos
 
         boolean salir = false;
         String dniBorrado;
@@ -20,18 +20,18 @@ public class Main {
 
                 case 1:
                     Menu.insertarCliente();
-                    FileAccessBinary.escribirCliente(new Cliente(Validacion.pedirNombre(), Validacion.pedirApellidos(), Validacion.pedirDni(), Validacion.pedirTlfn(), Validacion.pedirDireccion()));
+                    FileAccessBinaryWrite.escribirCliente(new Cliente(Validacion.pedirNombre(), Validacion.pedirApellidos(), Validacion.pedirDni(), Validacion.pedirTlfn(), Validacion.pedirDireccion()));
                     break;
 
                 case 2:
-                    Menu.mostrarCliente(FileAccessBinary.buscarClientePorPosicion(FileAccessBinary.buscarPosicionFicheroIndice(Validacion.pedirDni())));
+                    Menu.mostrarCliente(FileAccessBinaryRead.buscarClientePorPosicion(FileAccessBinaryRead.buscarPosicionFicheroIndice(Validacion.pedirDni())));
                     break;
 
                 case 3:
                     dniBorrado = Validacion.pedirDni();
-                    FileAccessBinary.leerClientesFicheroIndiceEnAuxiliar();
-                    FileAccessBinary.leerClientesFicheroAux(dniBorrado);
-                    Menu.mostrarMensajeComprobacionPersonaBorrada(comprobarPersonaBorrada( FileAccessBinary.buscarPosicionFicheroIndice(dniBorrado)));
+                    FileAccessBinaryRead.leerClientesFicheroIndiceEnAuxiliar();
+                    FileAccessBinaryRead.leerClientesFicheroAux(dniBorrado);
+                    Menu.mostrarMensajeComprobacionPersonaBorrada(comprobarPersonaBorrada(FileAccessBinaryRead.buscarPosicionFicheroIndice(dniBorrado)));
                     break;
 
                 case 4:
@@ -39,7 +39,7 @@ public class Main {
                     break;
 
                 case 5:
-                    FileAccessBinary.exportarFicheroCliente();
+                    FileAccessBinaryRead.exportarFicheroCliente();
                     break;
 
                 case 0:

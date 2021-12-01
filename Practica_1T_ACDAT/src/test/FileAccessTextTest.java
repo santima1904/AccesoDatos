@@ -22,7 +22,7 @@ class FileAccessTextTest {
 
     @AfterEach
      void afterEach() {
-       FileAccessText.inicializarFicheroExportado();
+       inicializarFichero(ficheroListadoClientes);
     }
 
     /**
@@ -53,6 +53,7 @@ class FileAccessTextTest {
     }
 
 
+    //Métodos privados para los tests
     /**
      * Metodo para los test
      * Lee el contenido de un fichero
@@ -69,5 +70,21 @@ class FileAccessTextTest {
             e.printStackTrace();
         }
         return contenido;
+    }
+
+    /**
+     * Metodo para los test
+     * Inicializa el fichero escribiendo un espacio vacio
+     *
+     * @param fichero
+     */
+    static void inicializarFichero(File fichero){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(fichero, false))){
+            bw.write("");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
