@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clientes>
+    <cliente DNI="89012345E">
+        <apellidos>ROJAS</apellidos>
+        <validez estado="borrado" timestamp="1528286082"/>
+    </cliente>
+    <cliente DNI="77866084K">
+        <apellidos>Macetero</apellidos>
+        <validez estado="activo papi" timestamp="si"/>
+    </cliente>
+</clientes>
