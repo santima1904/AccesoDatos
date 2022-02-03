@@ -22,7 +22,7 @@ public class MiConexion implements Serializable {
 
     public MiConexion() {
         this.host = "107-12";
-        this.bbdd = "MartinezAral";
+        this.bbdd = "Javamon";
         this.usuario = "santi";
         this.contasenha = "mitesoro";
         this.puerto = "49676";

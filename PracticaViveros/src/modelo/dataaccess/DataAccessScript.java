@@ -33,10 +33,10 @@ public class DataAccessScript {
                 st.execute(instruccionCompleta.toString());
                 st.close();
             }catch(SQLException e){
-                //mensaje error
+                e.printStackTrace();
             }
         }catch(IOException e){
-            //error
+            e.printStackTrace();
         }
     }
 }
