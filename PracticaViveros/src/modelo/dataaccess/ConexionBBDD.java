@@ -12,7 +12,7 @@ public class ConexionBBDD {
      *
      * @return
      */
-    public Connection abrirConexion(MiConexion conexion){
+    public static Connection abrirConexion(MiConexion conexion){
         Connection connexionBaseDatos = null;
 
         try {
@@ -34,7 +34,7 @@ public class ConexionBBDD {
      * @param conexion
      * @return
      */
-    public Statement crearStatement(Connection conexion){
+    public static Statement crearStatement(Connection conexion){
         Statement sentencia = null;
 
         try {
@@ -55,7 +55,7 @@ public class ConexionBBDD {
      *
      * @param conexion
      */
-    public void cerrarConexion(Connection conexion){
+    public static void cerrarConexion(Connection conexion){
         try {
             conexion.close();
         } catch (SQLException throwables) {
@@ -72,7 +72,7 @@ public class ConexionBBDD {
      *
      * @param sentencia
      */
-    public void cerrarStatement(Statement sentencia){
+    public static void cerrarStatement(Statement sentencia){
         try {
             sentencia.close();
         } catch (SQLException throwables) {
@@ -89,7 +89,7 @@ public class ConexionBBDD {
      *
      * @param res
      */
-    public void cerrarResultset(ResultSet res){
+    public static void cerrarResultset(ResultSet res){
         try {
             res.close();
         } catch (SQLException throwables) {

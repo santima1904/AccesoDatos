@@ -3,20 +3,20 @@ package modelo.clasesBasicas.productos;
 import modelo.clasesBasicas.productos.Producto;
 import modelo.enums.TipoPlanta;
 
-public class PropuctoPlanta extends Producto {
+public class ProductoPlanta extends Producto {
 
     //Atributos
     private TipoPlanta tipo;
 
     //Constructor
     //Con parámetros
-    public PropuctoPlanta(int codigo, String descripcion, double precioUnitario, int unidades, TipoPlanta tipo) {
+    public ProductoPlanta(int codigo, String descripcion, double precioUnitario, int unidades, TipoPlanta tipo) {
         super(codigo, descripcion, precioUnitario, unidades);
         this.tipo = tipo;
     }
 
     //Por defecto
-    public PropuctoPlanta() {
+    public ProductoPlanta() {
         this.tipo = null;
     }
 
@@ -25,4 +25,7 @@ public class PropuctoPlanta extends Producto {
         return tipo;
     }
 
+    public void setTipo(TipoPlanta tipo) {
+        this.tipo = tipo;
+    }
 }
