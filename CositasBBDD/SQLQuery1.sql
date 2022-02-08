@@ -22,8 +22,9 @@ SELECT * FROM UsuarioVendedor
 SELECT * FROM UsuarioGestor
 
 --Mostrar las facturas de un cliente concreto.
-SELECT * FROM Cliente 
-WHERE Id = @id
+SELECT F.Id, F.fecha, F.importe, F.idVendedor, C.nombre FROM Cliente AS C
+INNER JOIN Factura AS F ON C.Id = F.idCliente
+--WHERE C.Id = 
 
 --Generar un informe con el total de ventas de un mes indicando la fecha.
 --Este informe incluirá las ventas totales por cada tipo de producto y el total global.

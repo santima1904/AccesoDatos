@@ -1,6 +1,6 @@
 package modelo.clasesBasicas.productos;
 
-public abstract class Producto {
+public class Producto {
 
     //Atributos
     private int codigo;

@@ -2,11 +2,13 @@ package modelo.clasesBasicas;
 
 import modelo.clasesBasicas.personas.Cliente;
 import modelo.clasesBasicas.personas.UsuarioVendedor;
+
 import java.time.LocalDate;
 
 public class Factura {
 
     //Artibutos
+    private int id;
     private LocalDate fecha;
     private double importe;
     private UsuarioVendedor vendedor;
@@ -14,7 +16,8 @@ public class Factura {
 
     //Constructores
     //Con parámetros
-    public Factura(LocalDate fecha, double importe, UsuarioVendedor vendedor, Cliente cliente) {
+    public Factura(int id, LocalDate fecha, double importe, UsuarioVendedor vendedor, Cliente cliente) {
+        this.id = id;
         this.fecha = fecha;
         this.importe = importe;
         this.vendedor = vendedor;
@@ -23,6 +26,7 @@ public class Factura {
 
     //Por defecto
     public Factura() {
+        id = 0;
         this.fecha = null;
         this.importe = 0;
         this.vendedor = null;
@@ -30,6 +34,15 @@ public class Factura {
     }
 
     //Getters and setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public LocalDate getFecha() {
         return fecha;
     }
