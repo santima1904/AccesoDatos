@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<productos>
+    <producto>
+        <nombre>Casco</nombre>
+        <descripcion>Soy un casco</descripcion>
+        <precio>10</precio>
+    </producto>
+    <producto>
+        <nombre>Microfono</nombre>
+        <descripcion>Soy un microfono</descripcion>
+        <precio>100</precio>
+    </producto>
+    <producto>
+        <nombre>Patata</nombre>
+        <descripcion>Soy una patata</descripcion>
+        <precio>1000</precio>
+    </producto>
+</productos>
