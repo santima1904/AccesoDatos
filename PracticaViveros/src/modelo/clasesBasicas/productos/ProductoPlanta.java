@@ -28,4 +28,11 @@ public class ProductoPlanta extends Producto {
     public void setTipo(TipoPlanta tipo) {
         this.tipo = tipo;
     }
+
+
+    //ToString
+    @Override
+    public String toString() {
+        return super.toString() +" "+ tipo;
+    }
 }

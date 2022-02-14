@@ -57,4 +57,11 @@ public class Producto {
     public void setUnidades(int unidades) {
         this.unidades = unidades;
     }
+
+    //ToString
+
+    @Override
+    public String toString() {
+        return codigo +" "+ descripcion +" "+ precioUnitario +" "+ unidades;
+    }
 }

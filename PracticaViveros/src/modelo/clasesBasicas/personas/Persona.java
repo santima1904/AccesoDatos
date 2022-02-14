@@ -90,4 +90,10 @@ public abstract class Persona {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    //toString
+    @Override
+    public String toString() {
+        return nombre +" "+ dni +" "+ codigoPostal +" "+ ciudad +" "+ telefono +" "+ correo;
+    }
 }

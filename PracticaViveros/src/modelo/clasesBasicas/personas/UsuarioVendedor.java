@@ -36,4 +36,10 @@ public class UsuarioVendedor extends Persona{
     public void setContrasenha(String contrasenha) {
         this.contrasenha = contrasenha;
     }
+
+    //toString
+    @Override
+    public String toString() {
+        return super.toString() +" "+ usuario +" "+ contrasenha;
+    }
 }
