@@ -4,6 +4,8 @@ import modelo.clasesBasicas.personas.Cliente;
 import modelo.clasesBasicas.personas.UsuarioGestor;
 import modelo.clasesBasicas.personas.UsuarioVendedor;
 import modelo.clasesBasicas.productos.Producto;
+import modelo.clasesBasicas.productos.ProductoJardineria;
+import modelo.clasesBasicas.productos.ProductoPlanta;
 
 import java.util.List;
 
@@ -65,8 +67,9 @@ public class Menu {
         System.out.println(CLIENTE_INCORRECTO);
     }
 
-    public static void menu_consultas(){
+    public static int menu_consultas(){
         System.out.println(MENU_CONSULTAS);
+        return validaciones.validarOpcionConsulta();
     }
 
     public static int pedirMes(){
@@ -79,8 +82,15 @@ public class Menu {
         return validaciones.pedirInt();
     }
 
-    public static void mostrarListadoProductos(List<Producto> listadoProductos){
-        for (Producto p:listadoProductos) {
+    public static void mostrarListadoProductosJardineria(List<ProductoJardineria> listadoProductos){
+        for (ProductoJardineria p:listadoProductos) {
+            System.out.println(p.toString());
+            System.out.println("\n");
+        }
+    }
+
+    public static void mostrarListadoProductosPlanta(List<ProductoPlanta> listadoProductos){
+        for (ProductoPlanta p:listadoProductos) {
             System.out.println(p.toString());
             System.out.println("\n");
         }

@@ -2,9 +2,11 @@ package controlador;
 
 import modelo.clasesBasicas.personas.Cliente;
 import modelo.dataaccess.consultas.ConsultasCliente;
+import modelo.dataaccess.consultas.ConsultasInforme;
+import modelo.dataaccess.consultas.ConsultasProductos;
+import modelo.dataaccess.consultas.ConsultasUsuarios;
 import vista.Menu;
 import vista.Validaciones;
-
 import java.util.List;
 
 public class Gestora {
@@ -39,5 +41,24 @@ public class Gestora {
         }while(!Validaciones.validarIdClientePorDni(id));
 
         return id;
+    }
+
+    public static boolean menuConsultas(){
+        boolean salir = false;
+        switch (Menu.menu_consultas()){
+            case 1 -> ConsultasInforme.getInformeMensual(Menu.pedirMes());
+            case 2 -> ConsultasInforme.getInformeAnual(Menu.pedirAnho());
+            case 3 -> {
+                Menu.mostrarListadoProductosJardineria(ConsultasProductos.getListadoProductosJardineria());
+                Menu.mostrarListadoProductosPlanta(ConsultasProductos.getListadoPlantasConTipo());
+            }
+            case 4 -> Menu.mostrarListadoClientes(ConsultasCliente.getListadoClientes());
+            case 5 -> Menu.mostrarListadoVendedores(ConsultasUsuarios.getListadoVendedores());
+            case 6 -> Menu.mostrarListadoGestores(ConsultasUsuarios.getListadoGestores());
+            case 7 -> ConsultasInforme.getFacturasCliente(validarIdCliente());
+            case 0 -> salir = true;
+        }
+
+        return salir;
     }
 }

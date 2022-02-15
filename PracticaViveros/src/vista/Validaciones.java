@@ -43,6 +43,15 @@ public class Validaciones {
         return mes;
     }
 
+    public int validarOpcionConsulta(){
+        int opcion = 0;
+
+        while(opcion<1 && opcion>7){
+            opcion = tecladoInt.nextInt();
+        }
+        return opcion;
+    }
+
     /**
      *
      * @return
