@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<clientes>
+    <cliente DNI="78901234X">
+        <nombre>Antonio</nombre>
+        <apellidos>NADALES</apellidos>
+        <direccion>Calle ... 14 puerta 5</direccion>
+        <CP>44126</CP>
+    </cliente>
+    <cliente DNI="89012345E">
+        <nombre>Ernesto</nombre>
+        <apellidos>ROJAS</apellidos>
+        <direccion>Calle Zimbawe 29</direccion>
+        <validez estado="borrado" timestamp="1528286082"/>
+    </cliente>
+    <cliente DNI="56789012B">
+        <nombre>Maria del Carmen</nombre>
+        <apellidos>SAMPER</apellidos>
+        <direccion>Calle me gustan las placas solares 34</direccion>
+        <CP>29730</CP>
+    </cliente>
+</clientes>

@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4d922ee-822a-45ee-98dd-95c64abe6198" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../CargarUnXml/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SupuestoExamenCargarXML/src/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SupuestoExamenCargarXML/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SupuestoExamenCargarXML/src/UtilidadesXML.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +36,7 @@
       <option name="presentableId" value="Default" />
       <updated>1642752059937</updated>
       <workItem from="1642752061187" duration="38000" />
+      <workItem from="1644998327618" duration="776000" />
     </task>
     <servers />
   </component>
