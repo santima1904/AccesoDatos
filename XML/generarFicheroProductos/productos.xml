@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<productos>
+    <producto id="1">
+        <stock>14</stock>
+        <caracteristicas color="morado" peso="156">Si</caracteristicas>
+    </producto>
+    <producto id="2">
+        <stock>68</stock>
+        <caracteristicas color="rosita" peso="15">Puede ser</caracteristicas>
+    </producto>
+    <producto id="3">
+        <stock>92</stock>
+        <caracteristicas color="rojo" peso="49"> </caracteristicas>
+    </producto>
+</productos>
