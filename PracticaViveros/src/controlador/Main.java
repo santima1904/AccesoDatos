@@ -13,6 +13,6 @@ public class Main {
            salir = Gestora.menuConsultas();
         }
 
-        System.out.println("Ha sido unplacer mamahuevo");
+        System.out.println("Ha sido un placer mamahuevo");
     }
 }
