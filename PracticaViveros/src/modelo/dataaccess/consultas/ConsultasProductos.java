@@ -34,7 +34,7 @@ public class ConsultasProductos {
         Statement statement = ConexionBBDD.crearStatement(connection);
         try(ResultSet rs = statement.executeQuery(LISTA_PRODUCTOS_PLANTA_TIPO)){
             while (rs.next()) {
-                    listadoPlantas.add((ProductoPlanta)crearProducto(rs));
+                    listadoPlantas.add(crearProductoPlanta(rs));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -59,7 +59,7 @@ public class ConsultasProductos {
         Statement statement = ConexionBBDD.crearStatement(connection);
         try(ResultSet rs = statement.executeQuery(LISTA_PRODUCTOS_JARDINERIA)){
             while (rs.next()) {
-                listadoJardineria.add((ProductoJardineria) crearProducto(rs));
+                listadoJardineria.add(crearProductoJardineria(rs));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -77,15 +77,35 @@ public class ConsultasProductos {
      * @param rs
      * @return
      */
-    private static Producto crearProducto(ResultSet rs) throws SQLException {
-       Producto producto;
+    private static ProductoPlanta crearProductoPlanta(ResultSet rs) throws SQLException {
+       ProductoPlanta producto;
        String consulta = "";
 
         ResultSetMetaData rsm = rs.getMetaData();
         for (int i = 1; i <= rsm.getColumnCount(); i++) {
-            consulta += rs.getString(i) + " ";
+            consulta += rs.getString(i) + "_";
         }
-        producto = generarProducto(consulta);
+        producto = generarProductoPlanta(consulta);
+
+        return producto;
+    }
+
+    /**
+     * <b>Cabecera: </b>private static ProductoPlanta crearProducto(ResultSet rs) throws SQLException</br>
+     * <b>Description: </b>Metodo para leer un producto de la base de datos</br>
+     *
+     * @param rs
+     * @return
+     */
+    private static ProductoJardineria crearProductoJardineria(ResultSet rs) throws SQLException {
+        ProductoJardineria producto;
+        String consulta = "";
+
+        ResultSetMetaData rsm = rs.getMetaData();
+        for (int i = 1; i <= rsm.getColumnCount(); i++) {
+            consulta += rs.getString(i) + "_";
+        }
+        producto = generarProductoJardineria(consulta);
 
         return producto;
     }
@@ -97,18 +117,35 @@ public class ConsultasProductos {
      * @param consulta
      * @return
      */
-    private static Producto generarProducto(String consulta){
-        Producto productoAux = null;
+    private static ProductoPlanta generarProductoPlanta(String consulta){
+        ProductoPlanta productoAux = new ProductoPlanta();
         String [] atributos;
 
-        atributos = consulta.split(" ");
+        atributos = consulta.split("_");
         productoAux.setCodigo(Integer.parseInt(atributos[0]));
         productoAux.setDescripcion(atributos[1]);
-        productoAux.setPrecioUnitario(Integer.parseInt(atributos[2]));
+        productoAux.setPrecioUnitario(Double.parseDouble(atributos[2]));
         productoAux.setUnidades(Integer.parseInt(atributos[3]));
-        if (atributos[4] != null){
-            ((ProductoPlanta)productoAux).setTipo(getTipo(atributos[4]));
-        }
+        productoAux.setTipo(getTipo(atributos[4]));
+
+        return productoAux;
+    }
+
+    /**
+     * <b>Cabecera: </b>private static Producto generarProducto(String consulta)</br>
+     * <b>Description: </b>Metodo para crear una planta o un producto de jardineria</br>
+     *
+     * @param consulta
+     * @return
+     */
+    private static ProductoJardineria generarProductoJardineria(String consulta){
+        ProductoJardineria productoAux = new ProductoJardineria();
+        String [] atributos;
+
+        atributos = consulta.split("_");
+        productoAux.setCodigo(Integer.parseInt(atributos[0]));
+        productoAux.setDescripcion(atributos[1]);
+        productoAux.setPrecioUnitario(Double.parseDouble(atributos[2]));
 
         return productoAux;
     }

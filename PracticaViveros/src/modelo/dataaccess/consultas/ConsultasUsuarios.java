@@ -14,7 +14,7 @@ public class ConsultasUsuarios {
     //Constantes
     public static final String LISTA_VENDEDORES = "SELECT * FROM UsuarioVendedor";
     public static final String LISTA_GESTORES = "SELECT * FROM UsuarioGestor";
-    public static final String VENDEDOR_CONCRETO = "SELECT * FROM UsuarioVendedor\n" +
+    public static final String VENDEDOR_CONCRETO = "SELECT * FROM UsuarioVendedor " +
             "WHERE Id = ";
 
     //Metodos
@@ -52,7 +52,7 @@ public class ConsultasUsuarios {
      * @return
      */
     public static UsuarioVendedor getVendedorConcreto(int id){
-        UsuarioVendedor vendedor = null;
+        UsuarioVendedor vendedor = new UsuarioVendedor();
         Connection connection = ConexionBBDD.abrirConexion(new MiConexion());
         Statement statement = ConexionBBDD.crearStatement(connection);
         try(ResultSet rs = statement.executeQuery(VENDEDOR_CONCRETO+id)){
@@ -79,7 +79,7 @@ public class ConsultasUsuarios {
 
         ResultSetMetaData rsm = rs.getMetaData();
         for (int i = 1; i <= rsm.getColumnCount(); i++) {
-            consulta += rs.getString(i) + " ";
+            consulta += rs.getString(i) + "_";
         }
         vendedor = generarVendedor(consulta);
 
@@ -94,10 +94,10 @@ public class ConsultasUsuarios {
      * @return
      */
     private static UsuarioVendedor generarVendedor(String consulta){
-        UsuarioVendedor vendedorAux = null;
+        UsuarioVendedor vendedorAux = new UsuarioVendedor();
         String [] atributos;
 
-        atributos = consulta.split(" ");
+        atributos = consulta.split("_");
         vendedorAux.setId(Integer.parseInt(atributos[0]));
         vendedorAux.setNombre(atributos[1]);
         vendedorAux.setDni(atributos[2]);
@@ -149,7 +149,7 @@ public class ConsultasUsuarios {
 
         ResultSetMetaData rsm = rs.getMetaData();
         for (int i = 1; i <= rsm.getColumnCount(); i++) {
-            consulta += rs.getString(i) + " ";
+            consulta += rs.getString(i) + "_";
         }
         gestor = generarGestor(consulta);
 
@@ -164,10 +164,10 @@ public class ConsultasUsuarios {
      * @return
      */
     private static UsuarioGestor generarGestor(String consulta){
-        UsuarioGestor gestorAux = null;
+        UsuarioGestor gestorAux = new UsuarioGestor();
         String [] atributos;
 
-        atributos = consulta.split(" ");
+        atributos = consulta.split("_");
         gestorAux.setId(Integer.parseInt(atributos[0]));
         gestorAux.setNombre(atributos[1]);
         gestorAux.setDni(atributos[2]);

@@ -50,7 +50,7 @@ public class ConsultasCliente {
      * @return
      */
     public static Cliente getClienteConcreto(int id){
-        Cliente cliente = null;
+        Cliente cliente = new Cliente();
         Connection connection = ConexionBBDD.abrirConexion(new MiConexion());
         Statement statement = ConexionBBDD.crearStatement(connection);
         try(ResultSet rs = statement.executeQuery(CLIENTE_CONCRETO+id)){
@@ -77,7 +77,7 @@ public class ConsultasCliente {
 
         ResultSetMetaData rsm = rs.getMetaData();
         for (int i = 1; i <= rsm.getColumnCount(); i++) {
-            consulta += rs.getString(i) + " ";
+            consulta += rs.getString(i) + "_";
         }
         cliente = generarCliente(consulta);
 
@@ -92,10 +92,10 @@ public class ConsultasCliente {
      * @return
      */
     private static Cliente generarCliente(String consulta){
-        Cliente clienteAux = null;
+        Cliente clienteAux = new Cliente();
         String [] atributos;
 
-        atributos = consulta.split(" ");
+        atributos = consulta.split("_");
         clienteAux.setId(Integer.parseInt(atributos[0]));
         clienteAux.setNombre(atributos[1]);
         clienteAux.setDni(atributos[2]);
