@@ -11,7 +11,7 @@ public class ConsultasCliente {
 
     //Constantes
     public static final String LISTA_CLIENTES = "SELECT * FROM Cliente";
-    public static final String CLIENTE_CONCRETO = "SELECT * FROM Cliente\n" +
+    public static final String CLIENTE_CONCRETO = "SELECT * FROM Cliente " +
             "WHERE Id = ";
 
     //Metodos
@@ -54,6 +54,7 @@ public class ConsultasCliente {
         Connection connection = ConexionBBDD.abrirConexion(new MiConexion());
         Statement statement = ConexionBBDD.crearStatement(connection);
         try(ResultSet rs = statement.executeQuery(CLIENTE_CONCRETO+id)){
+                rs.next();
                 cliente = crearCliente(rs);
         } catch (SQLException e) {
             e.printStackTrace();

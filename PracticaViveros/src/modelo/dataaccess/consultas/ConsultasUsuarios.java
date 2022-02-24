@@ -77,6 +77,7 @@ public class ConsultasUsuarios {
         UsuarioVendedor vendedor;
         String consulta = "";
 
+        rs.next();
         ResultSetMetaData rsm = rs.getMetaData();
         for (int i = 1; i <= rsm.getColumnCount(); i++) {
             consulta += rs.getString(i) + "_";

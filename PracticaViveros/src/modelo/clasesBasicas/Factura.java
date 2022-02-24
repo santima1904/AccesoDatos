@@ -74,4 +74,14 @@ public class Factura {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    @Override
+    public String toString() {
+        return "Factura = " +
+                id + ", " +
+                fecha + ", " +
+                importe + ", " +
+                vendedor.getNombre() + ", " +
+                cliente.getNombre();
+    }
 }

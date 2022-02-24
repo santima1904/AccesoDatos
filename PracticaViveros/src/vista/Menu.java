@@ -1,5 +1,6 @@
 package vista;
 
+import modelo.clasesBasicas.Factura;
 import modelo.clasesBasicas.personas.Cliente;
 import modelo.clasesBasicas.personas.UsuarioGestor;
 import modelo.clasesBasicas.personas.UsuarioVendedor;
@@ -114,6 +115,12 @@ public class Menu {
         for (UsuarioGestor ug:listadoGestores) {
             System.out.println(ug.toString());
             System.out.println("\n");
+        }
+    }
+
+    public static void mostrarFacturasClienteConcreto(List<Factura> listadoFacturas){
+        for (Factura factura:listadoFacturas) {
+            System.out.println(factura.toString());
         }
     }
 
