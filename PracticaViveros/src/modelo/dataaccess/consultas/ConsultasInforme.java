@@ -5,6 +5,7 @@ import modelo.dataaccess.ConexionBBDD;
 import modelo.dataaccess.MiConexion;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -14,11 +15,11 @@ import java.util.Locale;
 public class ConsultasInforme {
 
     //Constantes
-    public static final String FACTURAS_CLIENTE_CONCRETO = "SELECT F.Id, F.fecha, F.importe, F.idVendedor, C.nombre FROM Cliente AS C\n" +
+    public static final String FACTURAS_CLIENTE_CONCRETO = "SELECT F.Id, F.fecha, F.importe, F.idVendedor, C.Id FROM Cliente AS C\n" +
             "INNER JOIN Factura AS F ON C.Id = F.idCliente\n" +
             "WHERE C.Id = ";
-    public static final String INFORME_MENSUAL = "EXEC GetInformeMensual ";
-    public static final String INFORME_ANUAL = "EXEC GetInformeAnual ";
+    public static final String INFORME_MENSUAL = "EXEC GetInformeMensual ?";
+    public static final String INFORME_ANUAL = "EXEC GetInformeAnual ?";
 
     //Metodos
     /**
@@ -59,7 +60,7 @@ public class ConsultasInforme {
 
         ResultSetMetaData rsm = rs.getMetaData();
         for (int i = 1; i <= rsm.getColumnCount(); i++) {
-            consulta += rs.getString(i) + " ";
+            consulta += rs.getString(i) + "_";
         }
         factura = generarFactura(consulta);
 
@@ -74,15 +75,15 @@ public class ConsultasInforme {
      * @return
      */
     private static Factura generarFactura(String consulta){
-        Factura facturaAux = null;
+        Factura facturaAux = new Factura();
         String [] atributos;
 
-        atributos = consulta.split(" ");
+        atributos = consulta.split("_");
         facturaAux.setId(Integer.parseInt(atributos[0]));
-        facturaAux.setFecha(LocalDate.parse(atributos[1]));
+        //facturaAux.setFecha(LocalDate.parse(atributos[1]));
         facturaAux.setImporte(Double.parseDouble(atributos[2]));
-        facturaAux.setCliente(ConsultasCliente.getClienteConcreto(Integer.parseInt(atributos[3])));
-        facturaAux.setVendedor(ConsultasUsuarios.getVendedorConcreto(Integer.parseInt(atributos[4])));
+        facturaAux.setCliente(ConsultasCliente.getClienteConcreto(Integer.parseInt(atributos[4])));
+        facturaAux.setVendedor(ConsultasUsuarios.getVendedorConcreto(Integer.parseInt(atributos[3])));
 
         return facturaAux;
     }
@@ -97,13 +98,15 @@ public class ConsultasInforme {
      */
     public static void getInformeMensual(int mes){
         Connection connection = ConexionBBDD.abrirConexion(new MiConexion());
-        Statement statement = ConexionBBDD.crearStatement(connection);
-        try(ResultSet rs = statement.executeQuery(INFORME_MENSUAL+mes)){
+
+        try(PreparedStatement st = connection.prepareStatement(INFORME_MENSUAL)){
+            st.setInt(1, mes);
+            st.execute();
+            ResultSet rs = st.getResultSet();
             recogerInforme(rs, true);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            ConexionBBDD.cerrarStatement(statement);
             ConexionBBDD.cerrarConexion(connection);
         }
     }
@@ -118,13 +121,15 @@ public class ConsultasInforme {
      */
     public static void getInformeAnual(int anho){
         Connection connection = ConexionBBDD.abrirConexion(new MiConexion());
-        Statement statement = ConexionBBDD.crearStatement(connection);
-        try(ResultSet rs = statement.executeQuery(INFORME_ANUAL+anho)){
+
+        try(PreparedStatement st = connection.prepareStatement(INFORME_ANUAL)){
+            st.setInt(1, anho);
+            st.execute();
+            ResultSet rs = st.getResultSet();
             recogerInforme(rs, false);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            ConexionBBDD.cerrarStatement(statement);
             ConexionBBDD.cerrarConexion(connection);
         }
     }
@@ -140,16 +145,16 @@ public class ConsultasInforme {
     private static void recogerInforme(ResultSet rs, boolean esMes) throws SQLException {
         String consulta = "";
 
+        rs.next();
         ResultSetMetaData rsm = rs.getMetaData();
         for (int i = 1; i <= rsm.getColumnCount(); i++) {
-            consulta += rs.getString(i) + " ";
+            consulta += rs.getString(i) + "_";
         }
         if (esMes){
             mostrarInformeMensual(consulta);
         }else{
             mostrarInformeAnual(consulta);
         }
-        System.out.println(consulta);
     }
 
     /**
@@ -161,11 +166,12 @@ public class ConsultasInforme {
     private static void mostrarInformeMensual(String consulta){
         String [] atributos;
 
-        atributos = consulta.split(" ");
+        atributos = consulta.split("_");
         System.out.println("Informe del mes de "+ Month.of(Integer.parseInt(atributos[0])).getDisplayName(TextStyle.FULL_STANDALONE, new Locale(Locale.ENGLISH.getLanguage())));
         System.out.println("Informe de ventas de productos plantas: " + atributos[1]);
         System.out.println("Informe de ventas de productos jardineria: " + atributos[2]);
         System.out.println("Informe de ventas totales: " + atributos[3]);
+        System.out.println("\n");
     }
 
     /**
@@ -177,10 +183,11 @@ public class ConsultasInforme {
     private static void mostrarInformeAnual(String consulta){
         String [] atributos;
 
-        atributos = consulta.split(" ");
+        atributos = consulta.split("_");
         System.out.println("Informe del anual de " + atributos[0]);
         System.out.println("Informe de ventas de productos plantas: " + atributos[1]);
         System.out.println("Informe de ventas de productos jardineria: " + atributos[2]);
         System.out.println("Informe de ventas totales: " + atributos[3]);
+        System.out.println("\n");
     }
 }

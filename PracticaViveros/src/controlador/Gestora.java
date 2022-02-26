@@ -22,11 +22,13 @@ public class Gestora {
      */
     private static int getIdClientePorDni(String dni){
         int id = -1;
+        boolean salir = false;
         List<Cliente> listadoClientes = ConsultasCliente.getListadoClientes();
 
-        for (int i = 0;i<listadoClientes.size();i++){
+        for (int i = 0;i<listadoClientes.size()&&!salir;i++){
             if (listadoClientes.get(i).getDni().equals(dni)){
                 id = listadoClientes.get(i).getId();
+                salir = true;
             }
         }
 
@@ -55,7 +57,7 @@ public class Gestora {
             case 4 -> Menu.mostrarListadoClientes(ConsultasCliente.getListadoClientes());
             case 5 -> Menu.mostrarListadoVendedores(ConsultasUsuarios.getListadoVendedores());
             case 6 -> Menu.mostrarListadoGestores(ConsultasUsuarios.getListadoGestores());
-            case 7 -> ConsultasInforme.getFacturasCliente(validarIdCliente());
+            case 7 -> Menu.mostrarFacturasClienteConcreto(ConsultasInforme.getFacturasCliente(validarIdCliente()));
             case 0 -> salir = true;
         }
 
