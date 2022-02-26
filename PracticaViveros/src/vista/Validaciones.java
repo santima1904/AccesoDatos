@@ -25,7 +25,20 @@ public class Validaciones {
      * @return int
      */
     public int pedirInt(){
-        return tecladoInt.nextInt();
+        String cadena_entero = "";
+        int entero = 0;
+        boolean valido = false;
+
+        while(!valido){
+           cadena_entero = teclado.nextLine();
+           try{
+               entero = Integer.parseInt(cadena_entero);
+               valido = true;
+           }catch (NumberFormatException nfe){
+               valido = false;
+           }
+        }
+        return entero;
     }
 
     /**
