@@ -33,6 +33,18 @@ public class ProductoPlanta extends Producto {
     //ToString
     @Override
     public String toString() {
-        return super.toString() +" "+ tipo;
+        return super.toString() +", tipo: " + mostrarTipo();
+    }
+
+    //private method
+    private String mostrarTipo(){
+        String cadenatipo = "";
+        switch (tipo){
+            case INTERIOR ->  cadenatipo = "Interior";
+            case EXTERIOR -> cadenatipo = "Exterior";
+            case ARBOLES_FRUTALES -> cadenatipo = "Árbol frutal";
+            case ARBOLES_ORNAMENTALES -> cadenatipo = "Árbol ornamental";
+        }
+        return cadenatipo;
     }
 }

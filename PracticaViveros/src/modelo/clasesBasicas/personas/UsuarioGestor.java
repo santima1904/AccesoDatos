@@ -41,6 +41,6 @@ public class UsuarioGestor extends Persona{
 
     @Override
     public String toString() {
-        return super.toString() +" "+ usuario +" "+ contrasenha;
+        return super.toString() +", usuario: "+ usuario +", contraseña: "+ contrasenha;
     }
 }

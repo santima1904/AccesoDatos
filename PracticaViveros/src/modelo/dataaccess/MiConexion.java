@@ -21,11 +21,11 @@ public class MiConexion implements Serializable {
     }
 
     public MiConexion() {
-        this.host = "107-12";
+        this.host = "localhost";
         this.bbdd = "MartinezAral";
-        this.usuario = "santi";
+        this.usuario = "Santi";
         this.contasenha = "mitesoro";
-        this.puerto = "49676";
+        this.puerto = "1433";
     }
 
     //Getters and setters

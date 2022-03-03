@@ -94,6 +94,6 @@ public abstract class Persona {
     //toString
     @Override
     public String toString() {
-        return nombre +" "+ dni +" "+ codigoPostal +" "+ ciudad +" "+ telefono +" "+ correo;
+        return "Nombre: " + nombre +", dni: "+ dni +", CP: "+ codigoPostal +", ciudad: "+ ciudad +", telefono: "+ telefono +", correo: "+ correo;
     }
 }

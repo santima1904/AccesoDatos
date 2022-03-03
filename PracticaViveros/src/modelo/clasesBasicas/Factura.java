@@ -77,11 +77,11 @@ public class Factura {
 
     @Override
     public String toString() {
-        return "Factura = " +
-                id + ", " +
-                fecha + ", " +
-                importe + ", " +
-                vendedor.getNombre() + ", " +
+        return "Factura nº " +
+                id + ", fecha: " +
+                fecha + ", importe: " +
+                importe + ", vendedor: " +
+                vendedor.getNombre() + ", cliente: " +
                 cliente.getNombre();
     }
 }

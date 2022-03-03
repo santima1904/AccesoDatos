@@ -24,7 +24,8 @@ public class Menu {
             "4. Clientes." +"\n"+
             "5. Vendedores." +"\n"+
             "6. Gestores." +"\n"+
-            "7. Facturas de un cliente.";
+            "7. Facturas de un cliente." +"\n"+
+            "0. Salir.";
     public final static String PEDIR_CLIENTE = "Introduzca el dni del ciente: ";
     public final static String PEDIR_MES = "Introduzca el mes que desea consultar: ";
     public final static String PEDIR_ANHO = "Introduzca el anho que desea consultar: ";
@@ -84,44 +85,53 @@ public class Menu {
     }
 
     public static void mostrarListadoProductosJardineria(List<ProductoJardineria> listadoProductos){
+        System.out.println("\n");
+        System.out.println("Productos: ");
         for (ProductoJardineria p:listadoProductos) {
             System.out.println(p.toString());
-            System.out.println("\n");
         }
     }
 
     public static void mostrarListadoProductosPlanta(List<ProductoPlanta> listadoProductos){
         for (ProductoPlanta p:listadoProductos) {
             System.out.println(p.toString());
-            System.out.println("\n");
         }
+        System.out.println("\n");
     }
 
     public static void mostrarListadoClientes(List<Cliente> listadoClientes){
+        System.out.println("\n");
+        System.out.println("Clientes: ");
         for (Cliente c:listadoClientes) {
             System.out.println(c.toString());
-            System.out.println("\n");
         }
+        System.out.println("\n");
     }
 
     public static void mostrarListadoVendedores(List<UsuarioVendedor> listadoVendedores){
+        System.out.println("\n");
+        System.out.println("Vendedores: ");
         for (UsuarioVendedor uv:listadoVendedores) {
             System.out.println(uv.toString());
-            System.out.println("\n");
         }
+        System.out.println("\n");
     }
 
     public static void mostrarListadoGestores(List<UsuarioGestor> listadoGestores){
+        System.out.println("\n");
+        System.out.println("Gestores: ");
         for (UsuarioGestor ug:listadoGestores) {
             System.out.println(ug.toString());
-            System.out.println("\n");
         }
+        System.out.println("\n");
     }
 
     public static void mostrarFacturasClienteConcreto(List<Factura> listadoFacturas){
+        System.out.println("\n");
         for (Factura factura:listadoFacturas) {
             System.out.println(factura.toString());
         }
+        System.out.println("\n");
     }
 
 }

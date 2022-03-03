@@ -14,9 +14,10 @@ import java.util.List;
 public class ConsultasProductos {
     //Constantes
     public static final String LISTA_PRODUCTOS_PLANTA_TIPO = "SELECT P.codigo, P.descripcion, P.precioUnitario, P.unidades, TP.nombre FROM Producto AS P\n" +
-            "INNER JOIN ProductoPlanta AS PP ON P.codigo = PP.codigo\n" +
+            "INNER JOIN ProductoPlanta AS PP ON P.codigo = PP.codigo " +
             "INNER JOIN TipoPlanta AS TP ON PP.idTipoPlanta = TP.Id";
-    public static final String LISTA_PRODUCTOS_JARDINERIA = "SELECT * FROM Producto";
+    public static final String LISTA_PRODUCTOS_JARDINERIA = "SELECT * FROM Producto AS P\n" +
+            "\tINNER JOIN ProductoJardineria AS PJ ON P.codigo = PJ.codigo";
 
     //Metodos
 

@@ -5,7 +5,6 @@ import modelo.dataaccess.ConexionBBDD;
 import modelo.dataaccess.MiConexion;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -77,15 +76,28 @@ public class ConsultasInforme {
     private static Factura generarFactura(String consulta){
         Factura facturaAux = new Factura();
         String [] atributos;
+        String [] fecha;
 
         atributos = consulta.split("_");
         facturaAux.setId(Integer.parseInt(atributos[0]));
-        //facturaAux.setFecha(LocalDate.parse(atributos[1]));
+        fecha = atributos[1].split(" ");
+        facturaAux.setFecha(LocalDate(fecha[0]));
         facturaAux.setImporte(Double.parseDouble(atributos[2]));
         facturaAux.setCliente(ConsultasCliente.getClienteConcreto(Integer.parseInt(atributos[4])));
         facturaAux.setVendedor(ConsultasUsuarios.getVendedorConcreto(Integer.parseInt(atributos[3])));
 
         return facturaAux;
+    }
+
+    /**
+     *  <b>Cabecera: </b>private static LocalDate LocalDate (String fecha)</br>
+     *  <b>Description: </b>Metodo para castear la fecha </br>
+     * @param fecha
+     * @return
+     */
+    private static LocalDate LocalDate (String fecha){
+        String [] partesFecha = fecha.split("-");
+        return LocalDate.of(Integer.parseInt(partesFecha[0]), Integer.parseInt(partesFecha[1]), Integer.parseInt(partesFecha[2]));
     }
 
     /**
@@ -167,11 +179,37 @@ public class ConsultasInforme {
         String [] atributos;
 
         atributos = consulta.split("_");
-        System.out.println("Informe del mes de "+ Month.of(Integer.parseInt(atributos[0])).getDisplayName(TextStyle.FULL_STANDALONE, new Locale(Locale.ENGLISH.getLanguage())));
+        System.out.println("Informe del mes de " + getMonth(Integer.parseInt(atributos[0])));
         System.out.println("Informe de ventas de productos plantas: " + atributos[1]);
         System.out.println("Informe de ventas de productos jardineria: " + atributos[2]);
         System.out.println("Informe de ventas totales: " + atributos[3]);
         System.out.println("\n");
+    }
+
+    /**
+     *  <b>Cabecera: </b> private static String getMonth(int mes)</br>
+     *  <b>Description: </b>Metodo para mostrar el mes con letras </br>
+     * @param mes
+     * @return
+     */
+    private static String getMonth(int mes){
+        String cadenaMes = " ";
+
+        switch (mes){
+            case 1 -> cadenaMes = "Enero";
+            case 2 -> cadenaMes = "Febrero";
+            case 3 -> cadenaMes = "Marzo";
+            case 4 -> cadenaMes = "Abril";
+            case 5 -> cadenaMes = "Mayo";
+            case 6 -> cadenaMes = "Junio";
+            case 7 -> cadenaMes = "Julio";
+            case 8 -> cadenaMes = "Agosto";
+            case 9 -> cadenaMes = "Septiembre";
+            case 10 -> cadenaMes = "Octubre";
+            case 11 -> cadenaMes = "Noviembre";
+            case 12 -> cadenaMes = "Diciembre";
+        }
+        return cadenaMes;
     }
 
     /**

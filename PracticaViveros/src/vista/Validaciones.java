@@ -51,15 +51,15 @@ public class Validaciones {
 
         do{
             mes = pedirInt();
-        }while (mes<1&&mes>12);
+        }while (mes<1||mes>12);
 
         return mes;
     }
 
     public int validarOpcionConsulta(){
-        int opcion = 0;
+        int opcion = 8;
 
-        while(opcion<1 || opcion>7){
+        while(opcion<0 || opcion>7){
             opcion = tecladoInt.nextInt();
         }
         return opcion;

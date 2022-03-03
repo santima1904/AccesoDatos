@@ -59,9 +59,8 @@ public class Producto {
     }
 
     //ToString
-
     @Override
     public String toString() {
-        return codigo +", "+ descripcion +", "+ precioUnitario +", "+ unidades;
+        return codigo +".- "+ descripcion +", precio: "+ precioUnitario +"€, unidades: "+ unidades;
     }
 }
