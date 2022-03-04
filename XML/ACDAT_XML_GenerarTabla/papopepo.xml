@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clientes>
+    <cliente DNI="78901234X">
+        <nombre>Antonio</nombre>
+        <apellidos>Cruz</apellidos>
+        <direccion>Calle... 14 puerta 5</direccion>
+        <CP>44126</CP>
+    </cliente>
+    <cliente DNI="89012345E">
+        <nombre>Ernesto</nombre>
+        <apellidos>Rojas</apellidos>
+        <direccion>Calle Zimbawe 29</direccion>
+        <CP>41001</CP>
+    </cliente>
+    <cliente DNI="56789012B">
+        <nombre>Maria </nombre>
+        <apellidos>Samper</apellidos>
+        <direccion>Calle Placa Solar</direccion>
+        <CP>29730</CP>
+    </cliente>
+</clientes>

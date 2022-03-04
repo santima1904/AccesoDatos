@@ -136,7 +136,7 @@ public class VendedorDao {
     private static String elegirMensajeValidacion(String columna){
         String valor = " ";
         switch (columna){
-            case "Direccion", "Ciudad", "Correo" -> valor = Validacion.pedirValor();
+            case "Direccion", "Ciudad", "Correo", "NombreUsuario", "Contrasenya" -> valor = Validacion.pedirValor();
             case "CodigoPostal" -> valor = Validacion.validarCodigoPostal();
             case "Telefono" -> valor = Validacion.validarTelefono();
         }

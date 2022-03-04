@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<productos>
+    <producto id="1">
+        <descripcion>Mantequilla</descripcion>
+        <precio>10.0</precio>
+        <stock>15</stock>
+    </producto>
+    <producto id="2">
+        <descripcion>Brocheta</descripcion>
+        <precio>99.67</precio>
+        <stock>100</stock>
+    </producto>
+    <producto id="3">
+        <descripcion>Piel de Toro</descripcion>
+        <precio>9999.99</precio>
+        <stock>14</stock>
+    </producto>
+</productos>
