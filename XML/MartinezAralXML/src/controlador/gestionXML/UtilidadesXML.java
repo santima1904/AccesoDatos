@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public abstract class UtilidadesXML {
 
+    private static final String TABULACION = "       ";
+    private static final int LONGITUD =30;
 
     /**
      * Cabecera: public static void exportarXML(String nombreFichero, ArrayList<Producto> productos)
@@ -76,7 +78,7 @@ public abstract class UtilidadesXML {
     public static ArrayList<Producto> parseXML(DocumentBuilder db, String nombreFichero){
         File file = new File(nombreFichero);
         Document document;
-        ArrayList<Producto> clientes = new ArrayList<>();
+        ArrayList<Producto> productos = new ArrayList<>();
 
         try {
             document = db.parse(file);
@@ -86,46 +88,37 @@ public abstract class UtilidadesXML {
                 Node nNode = nList.item(i);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    Producto cliente = new Producto(eElement.getAttribute("id"),
-                            eElement.getElementsByTagName("nombre").item(0).getTextContent(),
-                            eElement.getElementsByTagName("apellidos").item(0).getTextContent(),
-                            eElement.getElementsByTagName("direccion").item(0).getTextContent(),
-                            eElement.getElementsByTagName("CP").item(0).getTextContent());
-                    clientes.add(cliente);
+                    Producto producto = new Producto(Integer.parseInt(eElement.getAttribute("id")),
+                            eElement.getElementsByTagName("descripcion").item(0).getTextContent(),
+                            Double.parseDouble(eElement.getElementsByTagName("precio").item(0).getTextContent()),
+                            Integer.parseInt(eElement.getElementsByTagName("stock").item(0).getTextContent()));
+                    productos.add(producto);
                 }
             }
         } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
-        return clientes;
+        return productos;
     }
-    public static void mostrarTabla(ArrayList<Cliente> clientes){
+    public static void mostrarTabla(ArrayList<Producto> productos){
         mostrarCabecera();
-        for (Cliente c:clientes) {
+        for (Producto p:productos) {
             StringBuilder sb = new StringBuilder();
-            sb.append(rellenarString(LONGITUD,c.getDni()));
+            sb.append(rellenarString(LONGITUD,p.getDescripcion()));
             sb.append(TABULACION);
-            sb.append(rellenarString(LONGITUD,c.getNombre()));
+            sb.append(rellenarString(LONGITUD,String.valueOf(p.getPrecio())));
             sb.append(TABULACION);
-            sb.append(rellenarString(LONGITUD,c.getApellidos()));
-            sb.append(TABULACION);
-            sb.append(rellenarString(LONGITUD,c.getDireccion()));
-            sb.append(TABULACION);
-            sb.append(rellenarString(LONGITUD,c.getCp()));
+            sb.append(rellenarString(LONGITUD,String.valueOf(p.getStock())));
             System.out.println(sb);
         }
     }
     private static void mostrarCabecera(){
         StringBuilder sb = new StringBuilder();
-        sb.append(rellenarString(LONGITUD,"DNI"));
+        sb.append(rellenarString(LONGITUD,"Descripcion"));
         sb.append(TABULACION);
-        sb.append(rellenarString(LONGITUD,"NOMBRE"));
+        sb.append(rellenarString(LONGITUD,"Precio"));
         sb.append(TABULACION);
-        sb.append(rellenarString(LONGITUD,"APELLIDOS"));
-        sb.append(TABULACION);
-        sb.append(rellenarString(LONGITUD,"DIRECCION"));
-        sb.append(TABULACION);
-        sb.append(rellenarString(LONGITUD,"CP"));
+        sb.append(rellenarString(LONGITUD,"Stock"));
         System.out.println(sb);
     }
 

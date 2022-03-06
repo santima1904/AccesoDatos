@@ -12,11 +12,12 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<Producto> productos = new ArrayList<>();
-            productos.add(new Producto(1,"Mantequilla",10,15));
-            productos.add(new Producto(2,"Brocheta",99.67,100));
-            productos.add(new Producto(3,"Piel de Toro",9999.99,14));
+            productos.add(new Producto(1,"Pistachos",5.50,309));
+            productos.add(new Producto(2,"Conchitas ",2.50,255));
+            productos.add(new Producto(3,"Risquetos",1.00,500));
 
         UtilidadesXML.exportarXML(NOMBRE_FICHERO,productos);
+        UtilidadesXML.mostrarTabla(UtilidadesXML.parseXML(UtilidadesXML.getDocumentBuilder(true,true), Main.NOMBRE_FICHERO));
     }
 
 }
